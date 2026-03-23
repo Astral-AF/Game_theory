@@ -1,160 +1,705 @@
 <!DOCTYPE html>
-
 <html dir="rtl" lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>خريطة نظرية الألعاب</title>
 <style>
+:root{
+  --bg:#06080e;
+  --bg-soft:#0b1018;
+  --panel:#0c1420;
+  --panel-2:#101827;
+  --panel-3:#0f1725;
+  --line:#1c3152;
+  --line-soft:#19304b;
+  --gold:#d6b35a;
+  --gold-soft:#b99845;
+  --text:#dbe5ef;
+  --muted:#8ea1b7;
+  --muted-2:#64809a;
+  --blue:#6aa8e6;
+  --green:#59c48a;
+  --purple:#b487f0;
+  --red:#d96a86;
+  --orange:#d89a50;
+  --shadow:0 16px 40px rgba(0,0,0,.28);
+  --radius:18px;
+  --radius-sm:12px;
+  --max:1200px;
+}
+
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#07090f;color:#e0e0e0;font-family:'Segoe UI',Tahoma,sans-serif;min-height:100vh;overflow-x:hidden}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(circle at top, rgba(33,55,96,.24), transparent 28%),
+    linear-gradient(180deg,#06080e 0%, #070b12 100%);
+  color:var(--text);
+  font-family:'Segoe UI',Tahoma,sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  line-height:1.65;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(transparent 0%, rgba(255,255,255,.015) 100%);
+  z-index:0;
+}
+
+.header,
+.tabs,
+.content{
+  position:relative;
+  z-index:1;
+}
 
 /* HEADER */
-.header{background:linear-gradient(135deg,#0a0f1e,#111828);border-bottom:1px solid #1a3a6a;padding:18px 20px 14px;text-align:center;position:sticky;top:0;z-index:100}
-.header h1{font-size:1.25rem;color:#c8a84b;letter-spacing:1px;margin-bottom:3px}
-.header p{font-size:0.7rem;color:#5a7a9a}
+.header{
+  background:
+    linear-gradient(135deg, rgba(12,20,36,.96), rgba(16,24,39,.96));
+  border-bottom:1px solid rgba(42,73,122,.55);
+  padding:24px 20px 18px;
+  text-align:center;
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(12px);
+  box-shadow:0 8px 24px rgba(0,0,0,.22);
+}
+.header h1{
+  font-size:clamp(1.2rem, 2vw, 1.75rem);
+  color:var(--gold);
+  letter-spacing:.3px;
+  margin-bottom:6px;
+  font-weight:800;
+}
+.header p{
+  font-size:.8rem;
+  color:var(--muted-2);
+}
 
 /* TABS */
-.tabs{display:flex;background:#07090f;border-bottom:1px solid #1a3a6a;overflow-x:auto;scrollbar-width:none;position:sticky;top:62px;z-index:99}
+.tabs{
+  display:flex;
+  gap:8px;
+  padding:10px 12px 12px;
+  background:rgba(7,10,16,.92);
+  border-bottom:1px solid rgba(32,58,97,.45);
+  overflow-x:auto;
+  scrollbar-width:none;
+  position:sticky;
+  top:78px;
+  z-index:99;
+  backdrop-filter:blur(10px);
+}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex:1;min-width:80px;padding:11px 6px;text-align:center;font-size:0.68rem;color:#4a6a8a;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
-.tab:hover{color:#90b0d0;background:#0d1220}
-.tab.active{color:#c8a84b;border-bottom-color:#c8a84b;background:#0d1220}
-.tab-icon{font-size:1rem;display:block;margin-bottom:2px}
+.tab{
+  flex:1;
+  min-width:92px;
+  padding:10px 10px 9px;
+  text-align:center;
+  font-size:.72rem;
+  color:#6d86a0;
+  cursor:pointer;
+  border:1px solid transparent;
+  border-radius:14px;
+  transition:.25s ease;
+  white-space:nowrap;
+  background:transparent;
+}
+.tab:hover{
+  color:#b2cae2;
+  background:#0d1522;
+  border-color:#203b60;
+  transform:translateY(-1px);
+}
+.tab.active{
+  color:var(--gold);
+  border-color:rgba(214,179,90,.42);
+  background:linear-gradient(180deg, rgba(214,179,90,.12), rgba(13,21,34,.85));
+  box-shadow:inset 0 0 0 1px rgba(214,179,90,.08);
+}
+.tab-icon{
+  font-size:1rem;
+  display:block;
+  margin-bottom:3px;
+}
 
 /* CONTENT */
-.content{display:none;padding:14px}
+.content{
+  display:none;
+  width:min(var(--max), 100%);
+  margin-inline:auto;
+  padding:20px 16px 34px;
+}
 .content.active{display:block}
 
 /* CARDS */
-.card{background:linear-gradient(135deg,#0a1525,#0d1520);border:1px solid #1a3a6a;border-radius:10px;padding:14px;margin-bottom:12px}
-.card-title{font-size:0.82rem;font-weight:bold;color:#c8a84b;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.card{
+  background:
+    linear-gradient(180deg, rgba(14,22,35,.95), rgba(9,15,25,.96));
+  border:1px solid rgba(34,63,106,.55);
+  border-radius:var(--radius);
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+.card-title{
+  font-size:.95rem;
+  font-weight:800;
+  color:var(--gold);
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  letter-spacing:.2px;
+}
+.card > div[style*="font-size:0.75rem"],
+.card > div[style*="font-size:0.72rem"],
+.card > div[style*="font-size:0.7rem"]{
+  line-height:1.85 !important;
+}
 
 /* CONCEPT CARDS */
-.concepts-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.concept-card{border-radius:10px;padding:12px;border:1px solid;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
-.concept-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.4)}
-.concept-card.expanded{grid-column:span 2}
-.concept-card::after{content:‘▼’;position:absolute;top:10px;left:10px;font-size:0.6rem;color:#4a6a8a;transition:transform .2s}
-.concept-card.expanded::after{transform:rotate(180deg)}
+.concepts-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:14px;
+}
+.concept-card{
+  border-radius:16px;
+  padding:14px;
+  border:1px solid;
+  cursor:pointer;
+  transition:.28s ease;
+  position:relative;
+  overflow:hidden;
+  min-height:100%;
+  box-shadow:0 10px 26px rgba(0,0,0,.18);
+}
+.concept-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(255,255,255,.025), transparent 35%);
+  pointer-events:none;
+}
+.concept-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 30px rgba(0,0,0,.28);
+}
+.concept-card.expanded{
+  grid-column:span 2;
+}
+.concept-card::after{
+  content:'▼';
+  position:absolute;
+  top:14px;
+  left:14px;
+  font-size:.64rem;
+  color:#6682a1;
+  transition:transform .2s ease;
+}
+.concept-card.expanded::after{
+  transform:rotate(180deg);
+}
 
-.cc-eq{background:#040d1a;border-color:#1a4a8a} .cc-eq .cc-title{color:#5b9bd5}
-.cc-zs{background:#0a0a1a;border-color:#3a3a8a} .cc-zs .cc-title{color:#8080d0}
-.cc-pd{background:#0a0408;border-color:#6a1a3a} .cc-pd .cc-title{color:#c05080}
-.cc-ch{background:#0f0a04;border-color:#7a4a1a} .cc-ch .cc-title{color:#d08030}
-.cc-bi{background:#040f0a;border-color:#1a6a3a} .cc-bi .cc-title{color:#50b080}
-.cc-mi{background:#0a050f;border-color:#5a1a7a} .cc-mi .cc-title{color:#a060c0}
-.cc-si{background:#0f0704;border-color:#7a3a1a} .cc-si .cc-title{color:#c06830}
-.cc-re{background:#04080f;border-color:#1a4a6a} .cc-re .cc-title{color:#4090b0}
-.cc-au{background:#07040f;border-color:#4a1a7a} .cc-au .cc-title{color:#9060c0}
-.cc-co{background:#040f08;border-color:#1a6a4a} .cc-co .cc-title{color:#40a870}
-.cc-sc{background:#0f0a04;border-color:#6a4a1a} .cc-sc .cc-title{color:#b07840}
-.cc-ev{background:#04040f;border-color:#3a2a7a} .cc-ev .cc-title{color:#7868c0}
-.cc-ba{background:#0f0408;border-color:#7a1a4a} .cc-ba .cc-title{color:#c04080}
-.cc-fo{background:#050f04;border-color:#2a6a2a} .cc-fo .cc-title{color:#60a060}
-.cc-pa{background:#0a0804;border-color:#6a5a1a} .cc-pa .cc-title{color:#b09030}
-.cc-mo{background:#04090f;border-color:#1a3a7a} .cc-mo .cc-title{color:#5080c0}
+.cc-eq{background:linear-gradient(180deg,#07111f,#08111c);border-color:#285894}
+.cc-eq .cc-title{color:#76b6f3}
+.cc-zs{background:linear-gradient(180deg,#0b0c1e,#0a0d17);border-color:#4c4ca0}
+.cc-zs .cc-title{color:#9292e3}
+.cc-pd{background:linear-gradient(180deg,#160912,#13080f);border-color:#8d2a52}
+.cc-pd .cc-title{color:#dc6b99}
+.cc-ch{background:linear-gradient(180deg,#171005,#141007);border-color:#9c6228}
+.cc-ch .cc-title{color:#e3a04d}
+.cc-bi{background:linear-gradient(180deg,#08140d,#09110d);border-color:#2e8650}
+.cc-bi .cc-title{color:#68ca96}
+.cc-mi{background:linear-gradient(180deg,#13091a,#100913);border-color:#7c3ea7}
+.cc-mi .cc-title{color:#c291ea}
+.cc-si{background:linear-gradient(180deg,#171008,#130e08);border-color:#9f562f}
+.cc-si .cc-title{color:#df915c}
+.cc-re{background:linear-gradient(180deg,#07111b,#071018);border-color:#2a6587}
+.cc-re .cc-title{color:#63b3d8}
+.cc-au{background:linear-gradient(180deg,#120918,#100816);border-color:#7039a5}
+.cc-au .cc-title{color:#be8eef}
+.cc-co{background:linear-gradient(180deg,#07130e,#09120d);border-color:#2a7d59}
+.cc-co .cc-title{color:#5ec892}
+.cc-sc{background:linear-gradient(180deg,#171207,#141008);border-color:#8e6a25}
+.cc-sc .cc-title{color:#cea35f}
+.cc-ev{background:linear-gradient(180deg,#09091a,#090914);border-color:#4a45a9}
+.cc-ev .cc-title{color:#9a90f1}
+.cc-ba{background:linear-gradient(180deg,#180910,#14080d);border-color:#9e315d}
+.cc-ba .cc-title{color:#de6f9f}
+.cc-fo{background:linear-gradient(180deg,#081308,#091108);border-color:#44833e}
+.cc-fo .cc-title{color:#7ed474}
+.cc-pa{background:linear-gradient(180deg,#171307,#151108);border-color:#958226}
+.cc-pa .cc-title{color:#ddc45a}
+.cc-mo{background:linear-gradient(180deg,#08101a,#08101a);border-color:#335fa4}
+.cc-mo .cc-title{color:#79aaf1}
 
-.cc-tag{display:inline-block;padding:2px 6px;border-radius:8px;font-size:0.58rem;margin:2px 2px 0 0;background:#0a1020;color:#6a8aa0;border:1px solid #1a3a5a}
-.cc-title{font-size:0.82rem;font-weight:bold;margin-bottom:3px}
-.cc-en{font-size:0.65rem;color:#4a6a8a;margin-bottom:6px;font-style:italic}
-.cc-short{font-size:0.68rem;color:#8a9ab0;line-height:1.4;margin-bottom:6px}
-.cc-detail{display:none;margin-top:8px;padding-top:8px;border-top:1px solid #1a2a3a}
+.cc-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:4px 9px;
+  border-radius:999px;
+  font-size:.6rem;
+  margin:4px 5px 0 0;
+  background:rgba(10,16,32,.82);
+  color:#88a7bf;
+  border:1px solid rgba(40,67,102,.8);
+}
+.cc-title{
+  font-size:.95rem;
+  font-weight:800;
+  margin-bottom:5px;
+  padding-left:18px;
+}
+.cc-en{
+  font-size:.72rem;
+  color:#7f99b3;
+  margin-bottom:8px;
+  font-style:italic;
+}
+.cc-short{
+  font-size:.72rem;
+  color:#b2c0cf;
+  line-height:1.7;
+  margin-bottom:8px;
+}
+.cc-detail{
+  display:none;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid rgba(42,66,96,.6);
+}
 .concept-card.expanded .cc-detail{display:block}
-.cc-formula{background:#040810;border:1px solid #1a3a5a;border-radius:6px;padding:8px;font-size:0.65rem;color:#6ab0d0;font-family:monospace;margin-bottom:8px;line-height:1.6}
-.cc-example{font-size:0.67rem;color:#7a9ab0;line-height:1.5;margin-bottom:6px}
-.cc-example strong{color:#c8a84b}
-.cc-realworld{font-size:0.65rem;color:#5a8a7a;font-style:italic}
+.cc-formula{
+  background:rgba(5,10,18,.8);
+  border:1px solid rgba(35,64,98,.8);
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:.67rem;
+  color:#7cc5ea;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  margin-bottom:10px;
+  line-height:1.9;
+  white-space:pre-line;
+}
+.cc-example{
+  font-size:.69rem;
+  color:#a7b9cb;
+  line-height:1.75;
+  margin-bottom:8px;
+}
+.cc-example strong{color:var(--gold)}
+.cc-realworld{
+  font-size:.67rem;
+  color:#7fb092;
+  font-style:italic;
+  line-height:1.7;
+}
 
 /* TREE VIEW */
-.tree{padding:0}
+.tree{padding:2px}
 .tree-node{margin-bottom:4px}
-.tree-branch{padding-right:16px;border-right:1px solid #1a3a5a;margin-right:8px}
-.tree-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:all .2s;border:1px solid transparent;font-size:0.72rem}
-.tree-item:hover{background:#0d1a2a;border-color:#1a3a5a}
-.tree-item.active{background:#0a1828;border-color:#2a5a8a}
-.tree-icon{font-size:0.9rem;flex-shrink:0}
-.tree-label{color:#c0d0e0;flex:1}
-.tree-tag{font-size:0.6rem;padding:1px 5px;border-radius:6px;background:#0a1020;border:1px solid #1a3a5a;color:#5a7a9a;white-space:nowrap}
-.tree-children{padding-right:20px;margin-top:4px}
+.tree-branch{
+  padding-right:16px;
+  border-right:1px dashed rgba(47,84,131,.75);
+  margin-right:10px;
+}
+.tree-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:14px;
+  cursor:pointer;
+  transition:.22s ease;
+  border:1px solid transparent;
+  font-size:.75rem;
+}
+.tree-item:hover{
+  background:#0d1827;
+  border-color:#244267;
+}
+.tree-item.active{
+  background:#0a1828;
+  border-color:#315f96;
+}
+.tree-icon{font-size:.95rem;flex-shrink:0}
+.tree-label{color:#d0deeb;flex:1}
+.tree-tag{
+  font-size:.6rem;
+  padding:3px 7px;
+  border-radius:999px;
+  background:#0a1020;
+  border:1px solid #213d60;
+  color:#7591ad;
+  white-space:nowrap;
+}
+.tree-children{padding-right:20px;margin-top:6px}
 
 /* MATRIX */
-.gt-matrix{width:100%;border-collapse:collapse;font-size:0.65rem}
-.gt-matrix th{background:#0a1525;color:#6a8aa0;padding:8px 6px;border:1px solid #1a3a5a;font-weight:normal;text-align:center}
-.gt-matrix td{padding:8px 6px;border:1px solid #1a3a5a;text-align:center;vertical-align:middle;font-size:0.67rem}
-.gt-matrix tr:nth-child(even) td{background:#06090f}
-.cell-high{color:#e74c3c;font-weight:bold}
-.cell-med{color:#e09b2d}
-.cell-low{color:#4caf50}
-.cell-blue{color:#5b9bd5}
-.cell-purple{color:#a060c0}
+.gt-matrix{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:.68rem;
+  overflow:hidden;
+  border-radius:14px;
+}
+.gt-matrix th{
+  background:#0c1624;
+  color:#84a1be;
+  padding:10px 8px;
+  border:1px solid #213a59;
+  font-weight:600;
+  text-align:center;
+}
+.gt-matrix td{
+  padding:10px 8px;
+  border:1px solid #1e3552;
+  text-align:center;
+  vertical-align:middle;
+  font-size:.68rem;
+  color:#d2deea;
+}
+.gt-matrix tr:nth-child(even) td{background:#09111a}
+.gt-matrix tr:nth-child(odd) td{background:#0b121d}
+.cell-high{color:#ef7f6c;font-weight:700}
+.cell-med{color:#e7b04b;font-weight:700}
+.cell-low{color:#63c985;font-weight:700}
+.cell-blue{color:#76b6f3;font-weight:700}
+.cell-purple{color:#c29af0;font-weight:700}
 
 /* PAYOFF TABLE */
-.payoff-wrap{display:flex;justify-content:center;margin:10px 0}
-.payoff-table{border-collapse:collapse;font-size:0.68rem}
-.payoff-table th{padding:8px 14px;background:#0a1525;color:#6a8aa0;border:1px solid #1a3a5a;text-align:center}
-.payoff-table td{padding:10px 14px;border:1px solid #1a3a5a;text-align:center;min-width:80px}
-.nash-cell{background:#0a2010;border:2px solid #4caf50!important}
-.dominant-cell{background:#1a0a08;border:2px solid #e74c3c!important}
-.payoff-high{color:#4caf50;font-weight:bold}
-.payoff-low{color:#e74c3c}
-.payoff-med{color:#e09b2d}
+.payoff-wrap{
+  display:flex;
+  justify-content:center;
+  margin:12px 0 4px;
+  overflow-x:auto;
+}
+.payoff-table{
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:.7rem;
+  min-width:320px;
+}
+.payoff-table th{
+  padding:10px 14px;
+  background:#0d1623;
+  color:#88a2bc;
+  border:1px solid #213a59;
+  text-align:center;
+}
+.payoff-table td{
+  padding:12px 14px;
+  border:1px solid #213a59;
+  text-align:center;
+  min-width:90px;
+  background:#0a121b;
+}
+.nash-cell{background:#0b2114 !important;border:2px solid #46b76a !important}
+.dominant-cell{background:#1d0b0b !important;border:2px solid #d85d5d !important}
+.payoff-high{color:#63c985;font-weight:800}
+.payoff-low{color:#ef7f6c;font-weight:800}
+.payoff-med{color:#e7b04b;font-weight:800}
 
 /* EQUILIBRIUM VISUAL */
-.eq-visual{display:flex;justify-content:center;align-items:center;gap:20px;padding:14px 0;flex-wrap:wrap}
+.eq-visual{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  padding:14px 0;
+  flex-wrap:wrap;
+}
 .eq-player{text-align:center;min-width:100px}
-.eq-name{font-size:0.7rem;color:#6a8aa0;margin-bottom:6px}
-.eq-choice{background:#0a1828;border:1px solid #2a5a8a;border-radius:8px;padding:8px 14px;font-size:0.72rem;color:#5b9bd5;cursor:pointer;transition:all .2s}
-.eq-choice:hover,.eq-choice.selected{background:#0d2a4a;border-color:#5b9bd5;color:#90c0e8}
+.eq-name{font-size:.72rem;color:#7f98b2;margin-bottom:6px}
+.eq-choice{
+  background:#0a1828;
+  border:1px solid #2a5a8a;
+  border-radius:10px;
+  padding:9px 14px;
+  font-size:.74rem;
+  color:#5b9bd5;
+  cursor:pointer;
+  transition:all .2s;
+}
+.eq-choice:hover,.eq-choice.selected{
+  background:#0d2a4a;
+  border-color:#5b9bd5;
+  color:#90c0e8;
+}
 .eq-arrow{font-size:1.4rem;color:#3a5a7a}
-.eq-result{text-align:center;padding:10px 16px;border-radius:8px;font-size:0.72rem;margin-top:10px;border:1px solid}
+.eq-result{
+  text-align:center;
+  padding:10px 16px;
+  border-radius:10px;
+  font-size:.72rem;
+  margin-top:10px;
+  border:1px solid;
+}
 
 /* QUIZ */
-.quiz-q{font-size:0.8rem;color:#c0d0e0;margin-bottom:10px;line-height:1.5}
-.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.quiz-opt{background:#0a1020;border:1px solid #1a3a5a;border-radius:8px;padding:10px;font-size:0.68rem;color:#8a9ab0;cursor:pointer;transition:all .2s;text-align:center}
-.quiz-opt:hover{border-color:#3a6a9a;color:#a0c0d8}
-.quiz-opt.correct{background:#041a08;border-color:#4caf50;color:#4caf50}
-.quiz-opt.wrong{background:#1a0404;border-color:#e74c3c;color:#e74c3c}
-.quiz-feedback{font-size:0.72rem;padding:8px 12px;border-radius:8px;margin-top:6px;line-height:1.5}
-.quiz-nav{display:flex;gap:8px;margin-top:10px}
-.quiz-btn{flex:1;padding:8px;border-radius:8px;border:1px solid #1a3a5a;background:#0a1020;color:#7a9ab0;font-size:0.7rem;cursor:pointer;transition:all .2s}
-.quiz-btn:hover{border-color:#3a6a9a;color:#a0c0d8}
-.quiz-prog{display:flex;gap:4px;margin-bottom:10px}
-.quiz-dot{width:8px;height:8px;border-radius:50%;background:#1a3a5a;transition:all .3s}
+.quiz-q{
+  font-size:.84rem;
+  color:#d7e3ef;
+  margin-bottom:12px;
+  line-height:1.8;
+}
+.quiz-opts{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:12px;
+}
+.quiz-opt{
+  background:#0b1220;
+  border:1px solid #203958;
+  border-radius:14px;
+  padding:12px 10px;
+  font-size:.72rem;
+  color:#adc1d6;
+  cursor:pointer;
+  transition:.22s ease;
+  text-align:center;
+  min-height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.quiz-opt:hover{
+  border-color:#3b6998;
+  color:#d3e4f3;
+  transform:translateY(-1px);
+}
+.quiz-opt.correct{
+  background:#07180c;
+  border-color:#4caf50;
+  color:#67d07a;
+}
+.quiz-opt.wrong{
+  background:#1a0809;
+  border-color:#e74c3c;
+  color:#f07f72;
+}
+.quiz-feedback{
+  font-size:.74rem;
+  padding:10px 12px;
+  border-radius:12px;
+  margin-top:6px;
+  line-height:1.75;
+}
+.quiz-nav{display:flex;gap:8px;margin-top:12px}
+.quiz-btn{
+  flex:1;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid #203958;
+  background:#0b1220;
+  color:#90a6bd;
+  font-size:.72rem;
+  cursor:pointer;
+  transition:.2s ease;
+  text-align:center;
+}
+.quiz-btn:hover{
+  border-color:#3a6a9a;
+  color:#c7d9ea;
+}
+.quiz-prog{
+  display:flex;
+  gap:6px;
+  margin-bottom:14px;
+  flex-wrap:wrap;
+}
+.quiz-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#214062;
+  transition:all .3s;
+}
 .quiz-dot.done{background:#4caf50}
-.quiz-dot.active{background:#c8a84b}
-.quiz-score{text-align:center;padding:16px;font-size:0.85rem;color:#c8a84b}
+.quiz-dot.active{background:var(--gold)}
+.quiz-score{
+  text-align:center;
+  padding:16px;
+  font-size:.9rem;
+  color:var(--gold);
+  line-height:1.8;
+}
 
 /* SEARCH */
-.search-wrap{position:relative;margin-bottom:12px}
-.search-inp{width:100%;background:#0a1020;border:1px solid #1a3a5a;border-radius:8px;padding:9px 14px;color:#c0d0e0;font-size:0.75rem;outline:none;transition:border-color .2s}
-.search-inp:focus{border-color:#3a6a9a}
-.search-inp::placeholder{color:#3a5a7a}
+.search-wrap{position:relative;margin-bottom:14px}
+.search-inp{
+  width:100%;
+  background:#0b1220;
+  border:1px solid #203958;
+  border-radius:14px;
+  padding:12px 14px;
+  color:#d5e1ec;
+  font-size:.78rem;
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+.search-inp:focus{
+  border-color:#4173a8;
+  box-shadow:0 0 0 4px rgba(65,115,168,.12);
+}
+.search-inp::placeholder{color:#58748f}
 .search-results{display:none}
 .search-results.show{display:block}
-.sr-item{background:#0a1525;border:1px solid #1a3a5a;border-radius:8px;padding:10px;margin-bottom:6px;cursor:pointer;transition:all .2s}
-.sr-item:hover{border-color:#2a5a8a;background:#0d1a2a}
-.sr-title{font-size:0.75rem;color:#c8a84b;margin-bottom:3px}
-.sr-desc{font-size:0.65rem;color:#6a8aa0}
+.sr-item{
+  background:#0c1523;
+  border:1px solid #203958;
+  border-radius:14px;
+  padding:12px;
+  margin-bottom:8px;
+  cursor:pointer;
+  transition:.22s ease;
+}
+.sr-item:hover{
+  border-color:#315f96;
+  background:#0d1a2a;
+  transform:translateY(-1px);
+}
+.sr-title{
+  font-size:.77rem;
+  color:var(--gold);
+  margin-bottom:4px;
+  font-weight:700;
+}
+.sr-desc{
+  font-size:.68rem;
+  color:#87a0ba;
+  line-height:1.7;
+}
 
 /* PROGRESS */
 .prog-section{margin-bottom:14px}
-.prog-label{display:flex;justify-content:space-between;font-size:0.68rem;color:#6a8aa0;margin-bottom:4px}
-.prog-track{background:#060c14;border-radius:4px;height:6px;overflow:hidden}
-.prog-fill{height:100%;border-radius:4px;transition:width 1s ease}
+.prog-label{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  font-size:.7rem;
+  color:#8da3ba;
+  margin-bottom:6px;
+}
+.prog-track{
+  background:#08111b;
+  border-radius:999px;
+  height:10px;
+  overflow:hidden;
+  border:1px solid rgba(27,49,77,.65);
+}
+.prog-fill{
+  height:100%;
+  border-radius:999px;
+  transition:width 1s ease;
+  box-shadow:0 0 18px rgba(255,255,255,.08) inset;
+}
 
 /* TAGS FILTER */
-.filter-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.filter-btn{padding:4px 10px;border-radius:12px;font-size:0.65rem;border:1px solid #1a3a5a;background:#0a1020;color:#5a7a9a;cursor:pointer;transition:all .2s}
-.filter-btn:hover,.filter-btn.active{background:#0d2a4a;border-color:#3a6a9a;color:#80b0d0}
+.filter-wrap{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:14px;
+}
+.filter-btn{
+  padding:7px 12px;
+  border-radius:999px;
+  font-size:.68rem;
+  border:1px solid #203958;
+  background:#0b1220;
+  color:#7e98b3;
+  cursor:pointer;
+  transition:.2s ease;
+}
+.filter-btn:hover,
+.filter-btn.active{
+  background:#102135;
+  border-color:#3c6b9d;
+  color:#b8d1e8;
+}
 
 /* SCROLL */
-::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:#07090f}
-::-webkit-scrollbar-thumb{background:#1a3a5a;border-radius:2px}
-</style>
+::-webkit-scrollbar-thumb{background:#1d3a59;border-radius:20px}
 
+/* Responsive helpers */
+.table-scroll{
+  overflow-x:auto;
+  border-radius:14px;
+}
+.info-grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.quick-grid-2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:12px;
+}
+.action-btn{
+  width:100%;
+  padding:12px;
+  background:linear-gradient(135deg,#0a2a1a,#0d3a25);
+  border:1px solid #2a6a4a;
+  border-radius:12px;
+  color:#50b080;
+  font-size:.76rem;
+  cursor:pointer;
+  margin-bottom:10px;
+  transition:.2s ease;
+  font-weight:700;
+}
+.action-btn:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.06);
+}
+
+/* MOBILE */
+@media (max-width:900px){
+  .content{padding:18px 14px 28px}
+  .concepts-grid{grid-template-columns:1fr}
+  .concept-card.expanded{grid-column:span 1}
+}
+
+@media (max-width:640px){
+  .header{padding:20px 14px 16px}
+  .tabs{top:74px;padding:8px 10px 10px}
+  .tab{min-width:84px;font-size:.68rem}
+  .card{padding:15px}
+  .card-title{font-size:.9rem}
+  .quiz-opts{grid-template-columns:1fr}
+  .info-grid-2,
+  .quick-grid-2{
+    grid-template-columns:1fr;
+  }
+  .gt-matrix{
+    min-width:640px;
+  }
+}
+
+@media (max-width:420px){
+  .content{padding:16px 12px 24px}
+  .tab{min-width:78px}
+  .card{border-radius:16px}
+}
+</style>
 </head>
 <body>
 
@@ -164,17 +709,16 @@ body{background:#07090f;color:#e0e0e0;font-family:'Segoe UI',Tahoma,sans-serif;m
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('overview')"><span class="tab-icon">🗺️</span>نظرة عامة</div>
-  <div class="tab" onclick="showTab('concepts')"><span class="tab-icon">🧩</span>المفاهيم</div>
-  <div class="tab" onclick="showTab('tree')"><span class="tab-icon">🌳</span>الشجرة</div>
-  <div class="tab" onclick="showTab('interactive')"><span class="tab-icon">⚡</span>تفاعلي</div>
-  <div class="tab" onclick="showTab('matrix')"><span class="tab-icon">📊</span>مصفوفة</div>
-  <div class="tab" onclick="showTab('quiz')"><span class="tab-icon">🎯</span>اختبر نفسك</div>
-  <div class="tab" onclick="showTab('search')"><span class="tab-icon">🔍</span>بحث</div>
+  <div class="tab active" onclick="showTab('overview', this)"><span class="tab-icon">🗺️</span>نظرة عامة</div>
+  <div class="tab" onclick="showTab('concepts', this)"><span class="tab-icon">🧩</span>المفاهيم</div>
+  <div class="tab" onclick="showTab('tree', this)"><span class="tab-icon">🌳</span>الشجرة</div>
+  <div class="tab" onclick="showTab('interactive', this)"><span class="tab-icon">⚡</span>تفاعلي</div>
+  <div class="tab" onclick="showTab('matrix', this)"><span class="tab-icon">📊</span>مصفوفة</div>
+  <div class="tab" onclick="showTab('quiz', this)"><span class="tab-icon">🎯</span>اختبر نفسك</div>
+  <div class="tab" onclick="showTab('search', this)"><span class="tab-icon">🔍</span>بحث</div>
 </div>
 
 <!-- ===== TAB 1: OVERVIEW ===== -->
-
 <div id="tab-overview" class="content active">
 
   <div class="card">
@@ -183,69 +727,68 @@ body{background:#07090f;color:#e0e0e0;font-family:'Segoe UI',Tahoma,sans-serif;m
       نظرية الألعاب هي <span style="color:#c8a84b">علم القرار الاستراتيجي</span> — تدرس كيف يتخذ العقلاء قراراتهم حين تعتمد نتيجة كل فرد على قرارات الآخرين. نشأت رياضياً على يد <span style="color:#5b9bd5">جون فون نيومان</span> وأوسكار مورغنشتيرن عام 1944، وتوسعت مع <span style="color:#5b9bd5">جون ناش</span> في الخمسينيات.
     </div>
 
-```
-<div class="prog-section">
-  <div class="prog-label"><span>الألعاب الساكنة (Static Games)</span><span>5 مفاهيم</span></div>
-  <div class="prog-track"><div class="prog-fill" style="width:100%;background:linear-gradient(90deg,#1a4a8a,#5b9bd5)"></div></div>
-</div>
-<div class="prog-section">
-  <div class="prog-label"><span>الألعاب الديناميكية (Dynamic Games)</span><span>4 مفاهيم</span></div>
-  <div class="prog-track"><div class="prog-fill" style="width:100%;background:linear-gradient(90deg,#1a6a3a,#50b080)"></div></div>
-</div>
-<div class="prog-section">
-  <div class="prog-label"><span>ألعاب المعلومات (Information Games)</span><span>3 مفاهيم</span></div>
-  <div class="prog-track"><div class="prog-fill" style="width:100%;background:linear-gradient(90deg,#5a1a7a,#a060c0)"></div></div>
-</div>
-<div class="prog-section">
-  <div class="prog-label"><span>الألعاب التطورية (Evolutionary Games)</span><span>2 مفاهيم</span></div>
-  <div class="prog-track"><div class="prog-fill" style="width:100%;background:linear-gradient(90deg,#7a3a1a,#c06830)"></div></div>
-</div>
-<div class="prog-section">
-  <div class="prog-label"><span>الألعاب التعاونية (Cooperative Games)</span><span>2 مفاهيم</span></div>
-  <div class="prog-track"><div class="prog-fill" style="width:100%;background:linear-gradient(90deg,#1a6a5a,#40a870)"></div></div>
-</div>
-```
-
+    <div class="prog-section">
+      <div class="prog-label"><span>الألعاب الساكنة (Static Games)</span><span>5 مفاهيم</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:100%;background:linear-gradient(90deg,#1a4a8a,#5b9bd5)"></div></div>
+    </div>
+    <div class="prog-section">
+      <div class="prog-label"><span>الألعاب الديناميكية (Dynamic Games)</span><span>4 مفاهيم</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:100%;background:linear-gradient(90deg,#1a6a3a,#50b080)"></div></div>
+    </div>
+    <div class="prog-section">
+      <div class="prog-label"><span>ألعاب المعلومات (Information Games)</span><span>3 مفاهيم</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:100%;background:linear-gradient(90deg,#5a1a7a,#a060c0)"></div></div>
+    </div>
+    <div class="prog-section">
+      <div class="prog-label"><span>الألعاب التطورية (Evolutionary Games)</span><span>2 مفاهيم</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:100%;background:linear-gradient(90deg,#7a3a1a,#c06830)"></div></div>
+    </div>
+    <div class="prog-section">
+      <div class="prog-label"><span>الألعاب التعاونية (Cooperative Games)</span><span>2 مفاهيم</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:100%;background:linear-gradient(90deg,#1a6a5a,#40a870)"></div></div>
+    </div>
   </div>
 
   <div class="card">
     <div class="card-title">🗂️ تصنيف الألعاب — الخريطة الكبرى</div>
-    <table class="gt-matrix">
-      <thead>
-        <tr>
-          <th>التصنيف</th>
-          <th>النوع</th>
-          <th>المثال الكلاسيكي</th>
-          <th>التطبيق</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td style="color:#c8a84b">عدد اللاعبين</td><td class="cell-blue">2 لاعبين / n لاعبين</td><td>الشطرنج / الانتخابات</td><td>مفاوضات / سياسة</td></tr>
-        <tr><td style="color:#c8a84b">مجموع النتائج</td><td class="cell-blue">صفري / غير صفري</td><td>الشطرنج / التجارة</td><td>حرب / تعاون</td></tr>
-        <tr><td style="color:#c8a84b">التسلسل</td><td class="cell-blue">آني / متسلسل</td><td>صخرة-ورقة / الشطرنج</td><td>مزادات / فاوضات</td></tr>
-        <tr><td style="color:#c8a84b">المعلومات</td><td class="cell-blue">كاملة / ناقصة</td><td>الشطرنج / البوكر</td><td>عقود / مزادات</td></tr>
-        <tr><td style="color:#c8a84b">التكرار</td><td class="cell-blue">مرة / متكررة</td><td>معضلة السجين / علاقات</td><td>تجارة / دول</td></tr>
-        <tr><td style="color:#c8a84b">التعاون</td><td class="cell-blue">تعاوني / غير تعاوني</td><td>تحالفات / تنافس</td><td>كارتل / سوق</td></tr>
-      </tbody>
-    </table>
+    <div class="table-scroll">
+      <table class="gt-matrix">
+        <thead>
+          <tr>
+            <th>التصنيف</th>
+            <th>النوع</th>
+            <th>المثال الكلاسيكي</th>
+            <th>التطبيق</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="color:#c8a84b">عدد اللاعبين</td><td class="cell-blue">2 لاعبين / n لاعبين</td><td>الشطرنج / الانتخابات</td><td>مفاوضات / سياسة</td></tr>
+          <tr><td style="color:#c8a84b">مجموع النتائج</td><td class="cell-blue">صفري / غير صفري</td><td>الشطرنج / التجارة</td><td>حرب / تعاون</td></tr>
+          <tr><td style="color:#c8a84b">التسلسل</td><td class="cell-blue">آني / متسلسل</td><td>صخرة-ورقة / الشطرنج</td><td>مزادات / فاوضات</td></tr>
+          <tr><td style="color:#c8a84b">المعلومات</td><td class="cell-blue">كاملة / ناقصة</td><td>الشطرنج / البوكر</td><td>عقود / مزادات</td></tr>
+          <tr><td style="color:#c8a84b">التكرار</td><td class="cell-blue">مرة / متكررة</td><td>معضلة السجين / علاقات</td><td>تجارة / دول</td></tr>
+          <tr><td style="color:#c8a84b">التعاون</td><td class="cell-blue">تعاوني / غير تعاوني</td><td>تحالفات / تنافس</td><td>كارتل / سوق</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="card">
     <div class="card-title">👑 أبرز العلماء</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <div style="background:#060c14;border:1px solid #1a3a5a;border-radius:8px;padding:10px">
+    <div class="info-grid-2">
+      <div style="background:#08111b;border:1px solid #1f3a5d;border-radius:14px;padding:12px">
         <div style="font-size:0.75rem;color:#5b9bd5;font-weight:bold;margin-bottom:3px">جون فون نيومان</div>
         <div style="font-size:0.65rem;color:#5a7a9a">مؤسس النظرية — 1944<br>نظرية الألعاب الصفرية</div>
       </div>
-      <div style="background:#060c14;border:1px solid #1a3a5a;border-radius:8px;padding:10px">
+      <div style="background:#08111b;border:1px solid #1f3a5d;border-radius:14px;padding:12px">
         <div style="font-size:0.75rem;color:#c8a84b;font-weight:bold;margin-bottom:3px">جون ناش</div>
         <div style="font-size:0.65rem;color:#5a7a9a">توازن ناش — نوبل 1994<br>الألعاب غير الصفرية</div>
       </div>
-      <div style="background:#060c14;border:1px solid #1a3a5a;border-radius:8px;padding:10px">
+      <div style="background:#08111b;border:1px solid #1f3a5d;border-radius:14px;padding:12px">
         <div style="font-size:0.75rem;color:#50b080;font-weight:bold;margin-bottom:3px">توماس شيلينج</div>
         <div style="font-size:0.65rem;color:#5a7a9a">الردع والتنسيق — نوبل 2005<br>تطبيقات السياسة الدولية</div>
       </div>
-      <div style="background:#060c14;border:1px solid #1a3a5a;border-radius:8px;padding:10px">
+      <div style="background:#08111b;border:1px solid #1f3a5d;border-radius:14px;padding:12px">
         <div style="font-size:0.75rem;color:#a060c0;font-weight:bold;margin-bottom:3px">روبرت أكسلرود</div>
         <div style="font-size:0.65rem;color:#5a7a9a">تطور التعاون — 1984<br>Tit-for-Tat الاستراتيجية</div>
       </div>
@@ -254,7 +797,6 @@ body{background:#07090f;color:#e0e0e0;font-family:'Segoe UI',Tahoma,sans-serif;m
 </div>
 
 <!-- ===== TAB 2: CONCEPTS ===== -->
-
 <div id="tab-concepts" class="content">
 
   <div class="filter-wrap">
@@ -268,409 +810,357 @@ body{background:#07090f;color:#e0e0e0;font-family:'Segoe UI',Tahoma,sans-serif;m
 
   <div class="concepts-grid" id="conceptsGrid">
 
-```
-<!-- NASH EQUILIBRIUM -->
-<div class="concept-card cc-eq" data-tags="equilibrium classic" onclick="toggleConcept(this)">
-  <div class="cc-title">توازن ناش</div>
-  <div class="cc-en">Nash Equilibrium</div>
-  <div class="cc-short">لا أحد يملك حافزاً للانحراف منفرداً عن استراتيجيته</div>
-  <span class="cc-tag">⚖️ توازن</span><span class="cc-tag">♟️ كلاسيكي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">الشرط: ∀i, uᵢ(sᵢ*, s₋ᵢ*) ≥ uᵢ(sᵢ, s₋ᵢ*)
-```
-
+    <!-- NASH EQUILIBRIUM -->
+    <div class="concept-card cc-eq" data-tags="equilibrium classic" onclick="toggleConcept(this)">
+      <div class="cc-title">توازن ناش</div>
+      <div class="cc-en">Nash Equilibrium</div>
+      <div class="cc-short">لا أحد يملك حافزاً للانحراف منفرداً عن استراتيجيته</div>
+      <span class="cc-tag">⚖️ توازن</span><span class="cc-tag">♟️ كلاسيكي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">الشرط: ∀i, uᵢ(sᵢ*, s₋ᵢ*) ≥ uᵢ(sᵢ, s₋ᵢ*)
 → لا لاعب يستطيع تحسين نتيجته بالتحرك وحده</div>
-<div class="cc-example"><strong>المثال:</strong> طريقان للتنقل — إذا تكدّس الجميع في طريق واحد، لا أحد يستطيع التحسن بالتحول وحده → توازن ناش</div>
-<div class="cc-realworld">🌍 التطبيق: سباقات التسلح، تسعير المنتجات المتنافسة، الازدحام المروري</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> طريقان للتنقل — إذا تكدّس الجميع في طريق واحد، لا أحد يستطيع التحسن بالتحول وحده → توازن ناش</div>
+        <div class="cc-realworld">🌍 التطبيق: سباقات التسلح، تسعير المنتجات المتنافسة، الازدحام المروري</div>
+      </div>
+    </div>
 
-```
-<!-- ZERO-SUM -->
-<div class="concept-card cc-zs" data-tags="classic equilibrium" onclick="toggleConcept(this)">
-  <div class="cc-title">اللعبة الصفرية</div>
-  <div class="cc-en">Zero-Sum Game</div>
-  <div class="cc-short">ما يكسبه أحد اللاعبين يخسره الآخر بالضبط</div>
-  <span class="cc-tag">♟️ كلاسيكي</span><span class="cc-tag">⚖️ توازن</span>
-  <div class="cc-detail">
-    <div class="cc-formula">مجموع النتائج = صفر دائماً
-```
-
+    <!-- ZERO-SUM -->
+    <div class="concept-card cc-zs" data-tags="classic equilibrium" onclick="toggleConcept(this)">
+      <div class="cc-title">اللعبة الصفرية</div>
+      <div class="cc-en">Zero-Sum Game</div>
+      <div class="cc-short">ما يكسبه أحد اللاعبين يخسره الآخر بالضبط</div>
+      <span class="cc-tag">♟️ كلاسيكي</span><span class="cc-tag">⚖️ توازن</span>
+      <div class="cc-detail">
+        <div class="cc-formula">مجموع النتائج = صفر دائماً
 u₁ + u₂ = 0  →  u₁ = -u₂</div>
-<div class="cc-example"><strong>المثال:</strong> الشطرنج، المزادات التنافسية، توزيع الأسواق — كل نصيب تأخذه يعني أقل للمنافس</div>
-<div class="cc-realworld">🌍 التطبيق: الانتخابات، التجارة الحمائية، الصراعات العسكرية المباشرة</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> الشطرنج، المزادات التنافسية، توزيع الأسواق — كل نصيب تأخذه يعني أقل للمنافس</div>
+        <div class="cc-realworld">🌍 التطبيق: الانتخابات، التجارة الحمائية، الصراعات العسكرية المباشرة</div>
+      </div>
+    </div>
 
-```
-<!-- PRISONER'S DILEMMA -->
-<div class="concept-card cc-pd" data-tags="classic applied" onclick="toggleConcept(this)">
-  <div class="cc-title">معضلة السجين</div>
-  <div class="cc-en">Prisoner's Dilemma</div>
-  <div class="cc-short">المصلحة الفردية تدمر المصلحة الجماعية رغم أن التعاون أفضل للجميع</div>
-  <span class="cc-tag">♟️ كلاسيكي</span><span class="cc-tag">🌍 تطبيقي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">التعاون المتبادل: (3,3)  ← أفضل جماعياً
-```
-
+    <!-- PRISONER'S DILEMMA -->
+    <div class="concept-card cc-pd" data-tags="classic applied" onclick="toggleConcept(this)">
+      <div class="cc-title">معضلة السجين</div>
+      <div class="cc-en">Prisoner's Dilemma</div>
+      <div class="cc-short">المصلحة الفردية تدمر المصلحة الجماعية رغم أن التعاون أفضل للجميع</div>
+      <span class="cc-tag">♟️ كلاسيكي</span><span class="cc-tag">🌍 تطبيقي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">التعاون المتبادل: (3,3)  ← أفضل جماعياً
 خيانة + تعاون: (5,0) أو (0,5)
 خيانة متبادلة: (1,1) ← توازن ناش الفعلي</div>
-<div class="cc-example"><strong>المثال:</strong> سباق التسلح — كلا الدولتين تفضلان السلام (3,3) لكنهما تنتهيان بالتسلح (1,1)</div>
-<div class="cc-realworld">🌍 التطبيق: اتفاقيات المناخ، أوبك، الكارتل، سياسة الأجور</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> سباق التسلح — كلا الدولتين تفضلان السلام (3,3) لكنهما تنتهيان بالتسلح (1,1)</div>
+        <div class="cc-realworld">🌍 التطبيق: اتفاقيات المناخ، أوبك، الكارتل، سياسة الأجور</div>
+      </div>
+    </div>
 
-```
-<!-- CHICKEN GAME -->
-<div class="concept-card cc-ch" data-tags="classic applied" onclick="toggleConcept(this)">
-  <div class="cc-title">لعبة الجبان</div>
-  <div class="cc-en">Chicken Game / Hawk-Dove</div>
-  <div class="cc-short">كلا الطرفين يتجهان للاصطدام — من يتراجع يخسر الهيبة لكن يتجنب الكارثة</div>
-  <span class="cc-tag">♟️ كلاسيكي</span><span class="cc-tag">🌍 تطبيقي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">الاصطدام: (-∞, -∞) ← كارثة
-```
-
+    <!-- CHICKEN GAME -->
+    <div class="concept-card cc-ch" data-tags="classic applied" onclick="toggleConcept(this)">
+      <div class="cc-title">لعبة الجبان</div>
+      <div class="cc-en">Chicken Game / Hawk-Dove</div>
+      <div class="cc-short">كلا الطرفين يتجهان للاصطدام — من يتراجع يخسر الهيبة لكن يتجنب الكارثة</div>
+      <span class="cc-tag">♟️ كلاسيكي</span><span class="cc-tag">🌍 تطبيقي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">الاصطدام: (-∞, -∞) ← كارثة
 أنا أتراجع: (-1, +1) ← أخسر الهيبة
 هو يتراجع: (+1, -1) ← أكسب
 كلانا يتراجع: (0, 0)</div>
-<div class="cc-example"><strong>المثال:</strong> أزمة الصواريخ الكوبية 1962 — كيندي وخروشوف يتجهان للاصطدام النووي</div>
-<div class="cc-realworld">🌍 التطبيق: مفاوضات حافة الهاوية، إضرابات العمال، التصعيد العسكري</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> أزمة الصواريخ الكوبية 1962 — كيندي وخروشوف يتجهان للاصطدام النووي</div>
+        <div class="cc-realworld">🌍 التطبيق: مفاوضات حافة الهاوية، إضرابات العمال، التصعيد العسكري</div>
+      </div>
+    </div>
 
-```
-<!-- BACKWARD INDUCTION -->
-<div class="concept-card cc-bi" data-tags="dynamic classic" onclick="toggleConcept(this)">
-  <div class="cc-title">الاستدلال العكسي</div>
-  <div class="cc-en">Backward Induction</div>
-  <div class="cc-short">تحليل اللعبة من نهايتها — النهاية تشكل القرارات الحالية</div>
-  <span class="cc-tag">🔄 ديناميكي</span><span class="cc-tag">♟️ كلاسيكي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">الجولة N (الأخيرة) → خيانة (لا غد)
-```
-
+    <!-- BACKWARD INDUCTION -->
+    <div class="concept-card cc-bi" data-tags="dynamic classic" onclick="toggleConcept(this)">
+      <div class="cc-title">الاستدلال العكسي</div>
+      <div class="cc-en">Backward Induction</div>
+      <div class="cc-short">تحليل اللعبة من نهايتها — النهاية تشكل القرارات الحالية</div>
+      <span class="cc-tag">🔄 ديناميكي</span><span class="cc-tag">♟️ كلاسيكي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">الجولة N (الأخيرة) → خيانة (لا غد)
 الجولة N-1 → خيانة (N محسومة)
 الجولة N-2 → خيانة
 …الجولة 1 → خيانة</div>
-<div class="cc-example"><strong>المثال:</strong> موظف في آخر يوم — يعرف أنه سيغادر فلا حافز للالتزام → الانهيار يسير من النهاية للبداية</div>
-<div class="cc-realworld">🌍 التطبيق: مفاوضات الميزانية، سياسي في آخر فترة، شركة توشك على الإفلاس</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> موظف في آخر يوم — يعرف أنه سيغادر فلا حافز للالتزام → الانهيار يسير من النهاية للبداية</div>
+        <div class="cc-realworld">🌍 التطبيق: مفاوضات الميزانية، سياسي في آخر فترة، شركة توشك على الإفلاس</div>
+      </div>
+    </div>
 
-```
-<!-- MIXED STRATEGY -->
-<div class="concept-card cc-mi" data-tags="equilibrium classic" onclick="toggleConcept(this)">
-  <div class="cc-title">الاستراتيجية المختلطة</div>
-  <div class="cc-en">Mixed Strategy</div>
-  <div class="cc-short">اللاعب يختار بشكل عشوائي بين استراتيجياته لمنع التنبؤ به</div>
-  <span class="cc-tag">⚖️ توازن</span><span class="cc-tag">♟️ كلاسيكي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">P(استراتيجية A) = p
-```
-
+    <!-- MIXED STRATEGY -->
+    <div class="concept-card cc-mi" data-tags="equilibrium classic" onclick="toggleConcept(this)">
+      <div class="cc-title">الاستراتيجية المختلطة</div>
+      <div class="cc-en">Mixed Strategy</div>
+      <div class="cc-short">اللاعب يختار بشكل عشوائي بين استراتيجياته لمنع التنبؤ به</div>
+      <span class="cc-tag">⚖️ توازن</span><span class="cc-tag">♟️ كلاسيكي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">P(استراتيجية A) = p
 P(استراتيجية B) = 1-p
 يختار p بحيث يكون الخصم غير مبالٍ بين خياراته</div>
-<div class="cc-example"><strong>المثال:</strong> حارس المرمى — يقفز يميناً أو يساراً بنسبة عشوائية لمنع الضارب من التنبؤ بحركته</div>
-<div class="cc-realworld">🌍 التطبيق: ضربات ركلات الترجيح، دوريات الشرطة، فحص الجمارك</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> حارس المرمى — يقفز يميناً أو يساراً بنسبة عشوائية لمنع الضارب من التنبؤ بحركته</div>
+        <div class="cc-realworld">🌍 التطبيق: ضربات ركلات الترجيح، دوريات الشرطة، فحص الجمارك</div>
+      </div>
+    </div>
 
-```
-<!-- SIGNALING -->
-<div class="concept-card cc-si" data-tags="info applied" onclick="toggleConcept(this)">
-  <div class="cc-title">نظرية الإشارات</div>
-  <div class="cc-en">Signaling Theory</div>
-  <div class="cc-short">إرسال إشارات موثوقة لنقل معلومات خاصة للطرف الآخر</div>
-  <span class="cc-tag">🔍 معلومات</span><span class="cc-tag">🌍 تطبيقي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">الإشارة الفعالة: تكلفتها على الضعيف > فائدتها
-```
-
+    <!-- SIGNALING -->
+    <div class="concept-card cc-si" data-tags="info applied" onclick="toggleConcept(this)">
+      <div class="cc-title">نظرية الإشارات</div>
+      <div class="cc-en">Signaling Theory</div>
+      <div class="cc-short">إرسال إشارات موثوقة لنقل معلومات خاصة للطرف الآخر</div>
+      <span class="cc-tag">🔍 معلومات</span><span class="cc-tag">🌍 تطبيقي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">الإشارة الفعالة: تكلفتها على الضعيف > فائدتها
 → فقط القوي يستطيع دفع التكلفة
 → الإشارة مصدوقة لأنها “مكلفة للتقليد”</div>
-<div class="cc-example"><strong>المثال:</strong> الشهادة الجامعية — قد لا تعلمك المهارة لكنها إشارة مكلفة تثبت قدرتك للتحمل</div>
-<div class="cc-realworld">🌍 التطبيق: الضمانات التجارية، التعليم، الإنفاق العسكري كإشارة قوة</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> الشهادة الجامعية — قد لا تعلمك المهارة لكنها إشارة مكلفة تثبت قدرتك للتحمل</div>
+        <div class="cc-realworld">🌍 التطبيق: الضمانات التجارية، التعليم، الإنفاق العسكري كإشارة قوة</div>
+      </div>
+    </div>
 
-```
-<!-- REPEATED GAMES -->
-<div class="concept-card cc-re" data-tags="dynamic applied" onclick="toggleConcept(this)">
-  <div class="cc-title">الألعاب المتكررة</div>
-  <div class="cc-en">Repeated Games</div>
-  <div class="cc-short">التكرار يُنتج التعاون — الخوف من العقاب المستقبلي يكبح الخيانة</div>
-  <span class="cc-tag">🔄 ديناميكي</span><span class="cc-tag">🌍 تطبيقي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">عامل الخصم: δ (قيمة الغد بالنسبة لليوم)
-```
-
+    <!-- REPEATED GAMES -->
+    <div class="concept-card cc-re" data-tags="dynamic applied" onclick="toggleConcept(this)">
+      <div class="cc-title">الألعاب المتكررة</div>
+      <div class="cc-en">Repeated Games</div>
+      <div class="cc-short">التكرار يُنتج التعاون — الخوف من العقاب المستقبلي يكبح الخيانة</div>
+      <span class="cc-tag">🔄 ديناميكي</span><span class="cc-tag">🌍 تطبيقي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">عامل الخصم: δ (قيمة الغد بالنسبة لليوم)
 التعاون ممكن إذا: δ ≥ (T-R)/(T-P)
 كلما ارتفع δ → زاد التعاون</div>
-<div class="cc-example"><strong>المثال:</strong> تجار يتعاملون مراراً — يتعاونون لأن الخيانة اليوم تعني خسارة الشريك غداً</div>
-<div class="cc-realworld">🌍 التطبيق: العلاقات الدولية، الشراكات التجارية، أوبك</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> تجار يتعاملون مراراً — يتعاونون لأن الخيانة اليوم تعني خسارة الشريك غداً</div>
+        <div class="cc-realworld">🌍 التطبيق: العلاقات الدولية، الشراكات التجارية، أوبك</div>
+      </div>
+    </div>
 
-```
-<!-- AUCTION THEORY -->
-<div class="concept-card cc-au" data-tags="info applied" onclick="toggleConcept(this)">
-  <div class="cc-title">نظرية المزادات</div>
-  <div class="cc-en">Auction Theory</div>
-  <div class="cc-short">كيف يتصرف المزايدون عند المعلومات الناقصة والمتناظرة</div>
-  <span class="cc-tag">🔍 معلومات</span><span class="cc-tag">🌍 تطبيقي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">لعنة الفائز (Winner's Curse):
-```
-
+    <!-- AUCTION THEORY -->
+    <div class="concept-card cc-au" data-tags="info applied" onclick="toggleConcept(this)">
+      <div class="cc-title">نظرية المزادات</div>
+      <div class="cc-en">Auction Theory</div>
+      <div class="cc-short">كيف يتصرف المزايدون عند المعلومات الناقصة والمتناظرة</div>
+      <span class="cc-tag">🔍 معلومات</span><span class="cc-tag">🌍 تطبيقي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">لعنة الفائز (Winner's Curse):
 الفائز بالمزاد غالباً يدفع أكثر من القيمة الحقيقية
 → لأنه الأكثر تفاؤلاً من بين الجميع</div>
-<div class="cc-example"><strong>المثال:</strong> مزاد النفط — الشركة الفائزة غالباً أكثر تفاؤلاً من الواقع في تقدير الاحتياطيات</div>
-<div class="cc-realworld">🌍 التطبيق: مزادات الطيف الإذاعي، العقارات، الاستحواذ على شركات</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> مزاد النفط — الشركة الفائزة غالباً أكثر تفاؤلاً من الواقع في تقدير الاحتياطيات</div>
+        <div class="cc-realworld">🌍 التطبيق: مزادات الطيف الإذاعي، العقارات، الاستحواذ على شركات</div>
+      </div>
+    </div>
 
-```
-<!-- COOPERATIVE GAME -->
-<div class="concept-card cc-co" data-tags="dynamic applied" onclick="toggleConcept(this)">
-  <div class="cc-title">اللعبة التعاونية</div>
-  <div class="cc-en">Cooperative Game / Coalition</div>
-  <div class="cc-short">اللاعبون يشكلون تحالفات لتعظيم الفائدة الجماعية ثم يقتسمون العائد</div>
-  <span class="cc-tag">🔄 ديناميكي</span><span class="cc-tag">🌍 تطبيقي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">قيمة التحالف: v(S) ≥ v(S₁) + v(S₂)
-```
-
+    <!-- COOPERATIVE GAME -->
+    <div class="concept-card cc-co" data-tags="dynamic applied" onclick="toggleConcept(this)">
+      <div class="cc-title">اللعبة التعاونية</div>
+      <div class="cc-en">Cooperative Game / Coalition</div>
+      <div class="cc-short">اللاعبون يشكلون تحالفات لتعظيم الفائدة الجماعية ثم يقتسمون العائد</div>
+      <span class="cc-tag">🔄 ديناميكي</span><span class="cc-tag">🌍 تطبيقي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">قيمة التحالف: v(S) ≥ v(S₁) + v(S₂)
 → التحالف يخلق قيمة أكبر من المجموع
 → مشكلة: كيف تُوزَّع الأرباح بعدالة؟</div>
-<div class="cc-example"><strong>المثال:</strong> أوبك — الدول تتحالف لرفع سعر النفط جماعياً أكثر مما تستطيع فردياً</div>
-<div class="cc-realworld">🌍 التطبيق: الاتحادات التجارية، الأحلاف العسكرية، الاندماجات</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> أوبك — الدول تتحالف لرفع سعر النفط جماعياً أكثر مما تستطيع فردياً</div>
+        <div class="cc-realworld">🌍 التطبيق: الاتحادات التجارية، الأحلاف العسكرية، الاندماجات</div>
+      </div>
+    </div>
 
-```
-<!-- SCREENING -->
-<div class="concept-card cc-sc" data-tags="info" onclick="toggleConcept(this)">
-  <div class="cc-title">الفرز والانتقاء</div>
-  <div class="cc-en">Screening / Adverse Selection</div>
-  <div class="cc-short">الطرف غير المطلع يصمم آليات لكشف المعلومات الخاصة للطرف المطلع</div>
-  <span class="cc-tag">🔍 معلومات</span>
-  <div class="cc-detail">
-    <div class="cc-formula">المشكلة: A يعرف معلومة B لا يعرفها
-```
-
+    <!-- SCREENING -->
+    <div class="concept-card cc-sc" data-tags="info" onclick="toggleConcept(this)">
+      <div class="cc-title">الفرز والانتقاء</div>
+      <div class="cc-en">Screening / Adverse Selection</div>
+      <div class="cc-short">الطرف غير المطلع يصمم آليات لكشف المعلومات الخاصة للطرف المطلع</div>
+      <span class="cc-tag">🔍 معلومات</span>
+      <div class="cc-detail">
+        <div class="cc-formula">المشكلة: A يعرف معلومة B لا يعرفها
 الحل: B يصمم عقوداً متعددة
 → كل نوع من A يختار العقد الذي يكشف حقيقته</div>
-<div class="cc-example"><strong>المثال:</strong> التأمين الصحي — الشركة تقدم خيارات مختلفة ليختار الصحيح والمريض ما يناسبهم فيكشفون حالتهم</div>
-<div class="cc-realworld">🌍 التطبيق: عقود العمل، قروض البنوك، أسواق السيارات المستعملة</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> التأمين الصحي — الشركة تقدم خيارات مختلفة ليختار الصحيح والمريض ما يناسبهم فيكشفون حالتهم</div>
+        <div class="cc-realworld">🌍 التطبيق: عقود العمل، قروض البنوك، أسواق السيارات المستعملة</div>
+      </div>
+    </div>
 
-```
-<!-- EVOLUTIONARY -->
-<div class="concept-card cc-ev" data-tags="dynamic" onclick="toggleConcept(this)">
-  <div class="cc-title">نظرية الألعاب التطورية</div>
-  <div class="cc-en">Evolutionary Game Theory</div>
-  <div class="cc-short">الاستراتيجيات تتطور مع الزمن — الأنجح ينتشر والأضعف يختفي</div>
-  <span class="cc-tag">🔄 ديناميكي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">الاستراتيجية التطورياً المستقرة (ESS):
-```
-
+    <!-- EVOLUTIONARY -->
+    <div class="concept-card cc-ev" data-tags="dynamic" onclick="toggleConcept(this)">
+      <div class="cc-title">نظرية الألعاب التطورية</div>
+      <div class="cc-en">Evolutionary Game Theory</div>
+      <div class="cc-short">الاستراتيجيات تتطور مع الزمن — الأنجح ينتشر والأضعف يختفي</div>
+      <span class="cc-tag">🔄 ديناميكي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">الاستراتيجية التطورياً المستقرة (ESS):
 إذا سادت استراتيجية S في المجتمع
 لا يستطيع أي طافر بكسرها والانتشار</div>
-<div class="cc-example"><strong>المثال:</strong> النسب بين الذكور والإناث في الطبيعة — عند 50/50 لا أحد يستفيد من تغيير الاستراتيجية</div>
-<div class="cc-realworld">🌍 التطبيق: أسواق الأعمال، انتشار الأعراف الاجتماعية، تطور البروتوكولات</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> النسب بين الذكور والإناث في الطبيعة — عند 50/50 لا أحد يستفيد من تغيير الاستراتيجية</div>
+        <div class="cc-realworld">🌍 التطبيق: أسواق الأعمال، انتشار الأعراف الاجتماعية، تطور البروتوكولات</div>
+      </div>
+    </div>
 
-```
-<!-- BARGAINING -->
-<div class="concept-card cc-ba" data-tags="dynamic applied" onclick="toggleConcept(this)">
-  <div class="cc-title">نظرية المساومة</div>
-  <div class="cc-en">Bargaining Theory</div>
-  <div class="cc-short">كيف يقتسم طرفان فائضاً متاحاً عبر التفاوض</div>
-  <span class="cc-tag">🔄 ديناميكي</span><span class="cc-tag">🌍 تطبيقي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">حل ناش للمساومة: يعظم حاصل ضرب المكاسب
-```
-
+    <!-- BARGAINING -->
+    <div class="concept-card cc-ba" data-tags="dynamic applied" onclick="toggleConcept(this)">
+      <div class="cc-title">نظرية المساومة</div>
+      <div class="cc-en">Bargaining Theory</div>
+      <div class="cc-short">كيف يقتسم طرفان فائضاً متاحاً عبر التفاوض</div>
+      <span class="cc-tag">🔄 ديناميكي</span><span class="cc-tag">🌍 تطبيقي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">حل ناش للمساومة: يعظم حاصل ضرب المكاسب
 max (u₁ - d₁)(u₂ - d₂)
 d = نقطة الانهيار (ماذا يحصل بدون اتفاق)</div>
-<div class="cc-example"><strong>المثال:</strong> مفاوضات الراتب — قوة مساومتك = بديلك الأفضل. من لديه عرض وظيفي آخر يساوم أفضل</div>
-<div class="cc-realworld">🌍 التطبيق: مفاوضات السلام، عقود العمل الجماعية، الطلاق</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> مفاوضات الراتب — قوة مساومتك = بديلك الأفضل. من لديه عرض وظيفي آخر يساوم أفضل</div>
+        <div class="cc-realworld">🌍 التطبيق: مفاوضات السلام، عقود العمل الجماعية، الطلاق</div>
+      </div>
+    </div>
 
-```
-<!-- FOLK THEOREM -->
-<div class="concept-card cc-fo" data-tags="dynamic classic" onclick="toggleConcept(this)">
-  <div class="cc-title">نظرية الفولكلور</div>
-  <div class="cc-en">Folk Theorem</div>
-  <div class="cc-short">في الألعاب المتكررة لا نهائياً، يمكن تحقيق أي نتيجة معقولة كتوازن</div>
-  <span class="cc-tag">🔄 ديناميكي</span><span class="cc-tag">♟️ كلاسيكي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">إذا كان δ (عامل الصبر) مرتفعاً كفاية:
-```
-
+    <!-- FOLK THEOREM -->
+    <div class="concept-card cc-fo" data-tags="dynamic classic" onclick="toggleConcept(this)">
+      <div class="cc-title">نظرية الفولكلور</div>
+      <div class="cc-en">Folk Theorem</div>
+      <div class="cc-short">في الألعاب المتكررة لا نهائياً، يمكن تحقيق أي نتيجة معقولة كتوازن</div>
+      <span class="cc-tag">🔄 ديناميكي</span><span class="cc-tag">♟️ كلاسيكي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">إذا كان δ (عامل الصبر) مرتفعاً كفاية:
 أي نتيجة تتجاوز نقطة الانهيار
 يمكن تحقيقها كتوازن في اللعبة المتكررة</div>
-<div class="cc-example"><strong>المثال:</strong> دول تتبادل التجارة عقوداً — تتعاون رغم أن الخيانة مربحة قصيراً لأن الغد أهم</div>
-<div class="cc-realworld">🌍 التطبيق: يفسر لماذا ينجح التعاون الدولي في بعض الأحيان</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> دول تتبادل التجارة عقوداً — تتعاون رغم أن الخيانة مربحة قصيراً لأن الغد أهم</div>
+        <div class="cc-realworld">🌍 التطبيق: يفسر لماذا ينجح التعاون الدولي في بعض الأحيان</div>
+      </div>
+    </div>
 
-```
-<!-- PARETO -->
-<div class="concept-card cc-pa" data-tags="equilibrium classic" onclick="toggleConcept(this)">
-  <div class="cc-title">كفاءة باريتو</div>
-  <div class="cc-en">Pareto Efficiency / Optimality</div>
-  <div class="cc-short">لا يمكن تحسين وضع أحد دون الإضرار بالآخر</div>
-  <span class="cc-tag">⚖️ توازن</span><span class="cc-tag">♟️ كلاسيكي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">النتيجة A تسود النتيجة B إذا:
-```
-
+    <!-- PARETO -->
+    <div class="concept-card cc-pa" data-tags="equilibrium classic" onclick="toggleConcept(this)">
+      <div class="cc-title">كفاءة باريتو</div>
+      <div class="cc-en">Pareto Efficiency / Optimality</div>
+      <div class="cc-short">لا يمكن تحسين وضع أحد دون الإضرار بالآخر</div>
+      <span class="cc-tag">⚖️ توازن</span><span class="cc-tag">♟️ كلاسيكي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">النتيجة A تسود النتيجة B إذا:
 → على الأقل لاعب واحد أفضل حالاً في A
 → ولا أحد أسوأ حالاً في A
 كفاءة باريتو: لا نتيجة تسودها</div>
-<div class="cc-example"><strong>المثال:</strong> توازن ناش ≠ باريتو بالضرورة. في معضلة السجين (1,1) هي ناش لكن (3,3) هي باريتو</div>
-<div class="cc-realworld">🌍 التطبيق: تقييم السياسات الاقتصادية، تصميم الأسواق</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> توازن ناش ≠ باريتو بالضرورة. في معضلة السجين (1,1) هي ناش لكن (3,3) هي باريتو</div>
+        <div class="cc-realworld">🌍 التطبيق: تقييم السياسات الاقتصادية، تصميم الأسواق</div>
+      </div>
+    </div>
 
-```
-<!-- MORAL HAZARD / MECHANISM DESIGN -->
-<div class="concept-card cc-mo" data-tags="info applied" onclick="toggleConcept(this)">
-  <div class="cc-title">تصميم الآليات</div>
-  <div class="cc-en">Mechanism Design</div>
-  <div class="cc-short">تصميم قواعد اللعبة لتحقيق نتيجة مرغوبة رغم التعارض في المصالح</div>
-  <span class="cc-tag">🔍 معلومات</span><span class="cc-tag">🌍 تطبيقي</span>
-  <div class="cc-detail">
-    <div class="cc-formula">نظرية الألعاب العكسية:
-```
-
+    <!-- MORAL HAZARD / MECHANISM DESIGN -->
+    <div class="concept-card cc-mo" data-tags="info applied" onclick="toggleConcept(this)">
+      <div class="cc-title">تصميم الآليات</div>
+      <div class="cc-en">Mechanism Design</div>
+      <div class="cc-short">تصميم قواعد اللعبة لتحقيق نتيجة مرغوبة رغم التعارض في المصالح</div>
+      <span class="cc-tag">🔍 معلومات</span><span class="cc-tag">🌍 تطبيقي</span>
+      <div class="cc-detail">
+        <div class="cc-formula">نظرية الألعاب العكسية:
 بدلاً من: “بالقواعد الموجودة، ما التوازن؟”
 السؤال: “ما القواعد التي تُنتج التوازن المطلوب؟”</div>
-<div class="cc-example"><strong>المثال:</strong> تصميم مزاد الطيف الإذاعي — FCC صممت المزاد ليكشف القيم الحقيقية ويحقق الكفاءة</div>
-<div class="cc-realworld">🌍 التطبيق: تصميم الأسواق، المزادات، سياسات الضرائب، عقود الحوافز</div>
-</div>
-</div>
+        <div class="cc-example"><strong>المثال:</strong> تصميم مزاد الطيف الإذاعي — FCC صممت المزاد ليكشف القيم الحقيقية ويحقق الكفاءة</div>
+        <div class="cc-realworld">🌍 التطبيق: تصميم الأسواق، المزادات، سياسات الضرائب، عقود الحوافز</div>
+      </div>
+    </div>
 
   </div>
 </div>
 
 <!-- ===== TAB 3: TREE ===== -->
-
 <div id="tab-tree" class="content">
   <div class="card">
     <div class="card-title">🌳 شجرة نظرية الألعاب الكاملة</div>
     <div class="tree">
 
-```
-  <div class="tree-node">
-    <div class="tree-item" onclick="toggleTree(this)">
-      <span class="tree-icon">♟️</span>
-      <span class="tree-label" style="color:#c8a84b;font-weight:bold">نظرية الألعاب</span>
-      <span class="tree-tag">16 مفهوم</span>
+      <div class="tree-node">
+        <div class="tree-item" onclick="toggleTree(this)">
+          <span class="tree-icon">♟️</span>
+          <span class="tree-label" style="color:#c8a84b;font-weight:bold">نظرية الألعاب</span>
+          <span class="tree-tag">16 مفهوم</span>
+        </div>
+        <div class="tree-children">
+
+          <!-- Branch 1 -->
+          <div class="tree-branch">
+            <div class="tree-item" onclick="toggleTree(this)">
+              <span class="tree-icon">⚖️</span>
+              <span class="tree-label" style="color:#5b9bd5">الألعاب الساكنة</span>
+              <span class="tree-tag">آنية</span>
+            </div>
+            <div class="tree-children" style="display:none">
+              <div class="tree-branch">
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">توازن ناش (Nash Equilibrium)</span><span class="tree-tag">أساسي</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">الاستراتيجية السائدة (Dominant Strategy)</span><span class="tree-tag">أساسي</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">الاستراتيجية المختلطة (Mixed Strategy)</span><span class="tree-tag">متقدم</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">كفاءة باريتو (Pareto Efficiency)</span><span class="tree-tag">أساسي</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branch 2 -->
+          <div class="tree-branch">
+            <div class="tree-item" onclick="toggleTree(this)">
+              <span class="tree-icon">🔄</span>
+              <span class="tree-label" style="color:#50b080">الألعاب الديناميكية</span>
+              <span class="tree-tag">متسلسلة</span>
+            </div>
+            <div class="tree-children" style="display:none">
+              <div class="tree-branch">
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">الاستدلال العكسي (Backward Induction)</span><span class="tree-tag">أساسي</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">الألعاب المتكررة (Repeated Games)</span><span class="tree-tag">أساسي</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">نظرية الفولكلور (Folk Theorem)</span><span class="tree-tag">متقدم</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">نظرية المساومة (Bargaining Theory)</span><span class="tree-tag">متقدم</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">اللعبة التعاونية (Coalition)</span><span class="tree-tag">متقدم</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branch 3 -->
+          <div class="tree-branch">
+            <div class="tree-item" onclick="toggleTree(this)">
+              <span class="tree-icon">🔍</span>
+              <span class="tree-label" style="color:#a060c0">ألعاب المعلومات</span>
+              <span class="tree-tag">معلومات ناقصة</span>
+            </div>
+            <div class="tree-children" style="display:none">
+              <div class="tree-branch">
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">نظرية الإشارات (Signaling)</span><span class="tree-tag">أساسي</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">الفرز والانتقاء (Screening)</span><span class="tree-tag">متقدم</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">نظرية المزادات (Auction Theory)</span><span class="tree-tag">متقدم</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">تصميم الآليات (Mechanism Design)</span><span class="tree-tag">متقدم</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branch 4 -->
+          <div class="tree-branch">
+            <div class="tree-item" onclick="toggleTree(this)">
+              <span class="tree-icon">🧬</span>
+              <span class="tree-label" style="color:#c06830">الألعاب التطورية</span>
+              <span class="tree-tag">انتشار</span>
+            </div>
+            <div class="tree-children" style="display:none">
+              <div class="tree-branch">
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">الاستراتيجية التطورية المستقرة (ESS)</span><span class="tree-tag">متقدم</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">ديناميكيات المكرار (Replicator Dynamics)</span><span class="tree-tag">متقدم</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branch 5 -->
+          <div class="tree-branch">
+            <div class="tree-item" onclick="toggleTree(this)">
+              <span class="tree-icon">🌍</span>
+              <span class="tree-label" style="color:#c05080">الألعاب الكلاسيكية</span>
+              <span class="tree-tag">تطبيقات</span>
+            </div>
+            <div class="tree-children" style="display:none">
+              <div class="tree-branch">
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">معضلة السجين (Prisoner's Dilemma)</span><span class="tree-tag">كلاسيكي</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">لعبة الجبان (Chicken Game)</span><span class="tree-tag">كلاسيكي</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">لعبة الصياد (Stag Hunt)</span><span class="tree-tag">كلاسيكي</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">لعبة الجنسين (Battle of Sexes)</span><span class="tree-tag">كلاسيكي</span></div>
+                <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">اللعبة الصفرية (Zero-Sum)</span><span class="tree-tag">كلاسيكي</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
-    <div class="tree-children">
-
-      <!-- Branch 1 -->
-      <div class="tree-branch">
-        <div class="tree-item" onclick="toggleTree(this)">
-          <span class="tree-icon">⚖️</span>
-          <span class="tree-label" style="color:#5b9bd5">الألعاب الساكنة</span>
-          <span class="tree-tag">آنية</span>
-        </div>
-        <div class="tree-children" style="display:none">
-          <div class="tree-branch">
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">توازن ناش (Nash Equilibrium)</span><span class="tree-tag">أساسي</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">الاستراتيجية السائدة (Dominant Strategy)</span><span class="tree-tag">أساسي</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">الاستراتيجية المختلطة (Mixed Strategy)</span><span class="tree-tag">متقدم</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">كفاءة باريتو (Pareto Efficiency)</span><span class="tree-tag">أساسي</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Branch 2 -->
-      <div class="tree-branch">
-        <div class="tree-item" onclick="toggleTree(this)">
-          <span class="tree-icon">🔄</span>
-          <span class="tree-label" style="color:#50b080">الألعاب الديناميكية</span>
-          <span class="tree-tag">متسلسلة</span>
-        </div>
-        <div class="tree-children" style="display:none">
-          <div class="tree-branch">
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">الاستدلال العكسي (Backward Induction)</span><span class="tree-tag">أساسي</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">الألعاب المتكررة (Repeated Games)</span><span class="tree-tag">أساسي</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">نظرية الفولكلور (Folk Theorem)</span><span class="tree-tag">متقدم</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">نظرية المساومة (Bargaining Theory)</span><span class="tree-tag">متقدم</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">اللعبة التعاونية (Coalition)</span><span class="tree-tag">متقدم</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Branch 3 -->
-      <div class="tree-branch">
-        <div class="tree-item" onclick="toggleTree(this)">
-          <span class="tree-icon">🔍</span>
-          <span class="tree-label" style="color:#a060c0">ألعاب المعلومات</span>
-          <span class="tree-tag">معلومات ناقصة</span>
-        </div>
-        <div class="tree-children" style="display:none">
-          <div class="tree-branch">
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">نظرية الإشارات (Signaling)</span><span class="tree-tag">أساسي</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">الفرز والانتقاء (Screening)</span><span class="tree-tag">متقدم</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">نظرية المزادات (Auction Theory)</span><span class="tree-tag">متقدم</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">تصميم الآليات (Mechanism Design)</span><span class="tree-tag">متقدم</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Branch 4 -->
-      <div class="tree-branch">
-        <div class="tree-item" onclick="toggleTree(this)">
-          <span class="tree-icon">🧬</span>
-          <span class="tree-label" style="color:#c06830">الألعاب التطورية</span>
-          <span class="tree-tag">انتشار</span>
-        </div>
-        <div class="tree-children" style="display:none">
-          <div class="tree-branch">
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">الاستراتيجية التطورية المستقرة (ESS)</span><span class="tree-tag">متقدم</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">ديناميكيات المكرار (Replicator Dynamics)</span><span class="tree-tag">متقدم</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Branch 5 -->
-      <div class="tree-branch">
-        <div class="tree-item" onclick="toggleTree(this)">
-          <span class="tree-icon">🌍</span>
-          <span class="tree-label" style="color:#c05080">الألعاب الكلاسيكية</span>
-          <span class="tree-tag">تطبيقات</span>
-        </div>
-        <div class="tree-children" style="display:none">
-          <div class="tree-branch">
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">معضلة السجين (Prisoner's Dilemma)</span><span class="tree-tag">كلاسيكي</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">لعبة الجبان (Chicken Game)</span><span class="tree-tag">كلاسيكي</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">لعبة الصياد (Stag Hunt)</span><span class="tree-tag">كلاسيكي</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">لعبة الجنسين (Battle of Sexes)</span><span class="tree-tag">كلاسيكي</span></div>
-            <div class="tree-item"><span class="tree-icon">•</span><span class="tree-label">اللعبة الصفرية (Zero-Sum)</span><span class="tree-tag">كلاسيكي</span></div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-```
-
   </div>
 </div>
 
 <!-- ===== TAB 4: INTERACTIVE ===== -->
-
 <div id="tab-interactive" class="content">
   <div class="card">
     <div class="card-title">⚡ معضلة السجين — العب بنفسك</div>
@@ -678,100 +1168,91 @@ d = نقطة الانهيار (ماذا يحصل بدون اتفاق)</div>
       أنت وشريكك قُبضتم. كل منكم يختار: تعاون (صمت) أو خيانة (اعتراف). القرار يتم في وقت واحد دون تنسيق.
     </div>
 
-```
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-  <div>
-    <div style="font-size:0.7rem;color:#6a8aa0;text-align:center;margin-bottom:8px">👤 اختيارك</div>
-    <div onclick="setChoice('you','cooperate',this)" id="you-coop" style="background:#0a1828;border:1px solid #2a5a8a;border-radius:8px;padding:10px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:6px">
-      <div style="font-size:0.8rem;color:#5b9bd5">🤝 تعاون</div>
-      <div style="font-size:0.6rem;color:#4a6a8a">الصمت</div>
+    <div class="quick-grid-2">
+      <div>
+        <div style="font-size:0.7rem;color:#6a8aa0;text-align:center;margin-bottom:8px">👤 اختيارك</div>
+        <div onclick="setChoice('you','cooperate',this)" id="you-coop" style="background:#0a1828;border:1px solid #2a5a8a;border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:8px">
+          <div style="font-size:0.8rem;color:#5b9bd5">🤝 تعاون</div>
+          <div style="font-size:0.6rem;color:#4a6a8a">الصمت</div>
+        </div>
+        <div onclick="setChoice('you','betray',this)" id="you-bet" style="background:#0a0818;border:1px solid #3a1a2a;border-radius:12px;padding:12px;text-align:center;cursor:pointer;transition:all .2s">
+          <div style="font-size:0.8rem;color:#c05080">🗡️ خيانة</div>
+          <div style="font-size:0.6rem;color:#5a2a3a">اعتراف</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:0.7rem;color:#6a8aa0;text-align:center;margin-bottom:8px">🤖 الخصم (عشوائي)</div>
+        <div id="opp-display" style="background:#0a1020;border:1px solid #1a3a5a;border-radius:12px;padding:24px;text-align:center;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div style="font-size:1.2rem">❓</div>
+          <div style="font-size:0.65rem;color:#4a6a8a;margin-top:4px">في الانتظار</div>
+        </div>
+      </div>
     </div>
-    <div onclick="setChoice('you','betray',this)" id="you-bet" style="background:#0a0818;border:1px solid #3a1a2a;border-radius:8px;padding:10px;text-align:center;cursor:pointer;transition:all .2s">
-      <div style="font-size:0.8rem;color:#c05080">🗡️ خيانة</div>
-      <div style="font-size:0.6rem;color:#5a2a3a">اعتراف</div>
+
+    <button onclick="playPD()" class="action-btn">▶ اكشف النتيجة</button>
+
+    <div id="pd-result" style="display:none;padding:12px;border-radius:12px;text-align:center;border:1px solid"></div>
+
+    <div style="margin-top:14px">
+      <div style="font-size:0.68rem;color:#5a7a9a;margin-bottom:8px;text-align:center">جدول المكافآت</div>
+      <div class="payoff-wrap">
+        <table class="payoff-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>الخصم: تعاون</th>
+              <th>الخصم: خيانة</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>أنت: تعاون</th>
+              <td class="nash-cell"><span class="payoff-high">3</span>, <span class="payoff-high">3</span><div style="font-size:0.55rem;color:#3a8a5a">باريتو ✓</div></td>
+              <td><span class="payoff-low">0</span>, <span class="payoff-high">5</span></td>
+            </tr>
+            <tr>
+              <th>أنت: خيانة</th>
+              <td><span class="payoff-high">5</span>, <span class="payoff-low">0</span></td>
+              <td class="dominant-cell"><span class="payoff-med">1</span>, <span class="payoff-med">1</span><div style="font-size:0.55rem;color:#9a4a3a">ناش ✓</div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-  <div>
-    <div style="font-size:0.7rem;color:#6a8aa0;text-align:center;margin-bottom:8px">🤖 الخصم (عشوائي)</div>
-    <div id="opp-display" style="background:#0a1020;border:1px solid #1a3a5a;border-radius:8px;padding:20px;text-align:center">
-      <div style="font-size:1.2rem">❓</div>
-      <div style="font-size:0.65rem;color:#4a6a8a;margin-top:4px">في الانتظار</div>
-    </div>
-  </div>
-</div>
-
-<button onclick="playPD()" style="width:100%;padding:10px;background:linear-gradient(135deg,#0a2a1a,#0d3a25);border:1px solid #2a6a4a;border-radius:8px;color:#50b080;font-size:0.75rem;cursor:pointer;margin-bottom:10px;transition:all .2s">
-  ▶ اكشف النتيجة
-</button>
-
-<div id="pd-result" style="display:none;padding:12px;border-radius:8px;text-align:center;border:1px solid"></div>
-
-<div style="margin-top:12px">
-  <div style="font-size:0.68rem;color:#5a7a9a;margin-bottom:6px;text-align:center">جدول المكافآت</div>
-  <div class="payoff-wrap">
-    <table class="payoff-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th>الخصم: تعاون</th>
-          <th>الخصم: خيانة</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>أنت: تعاون</th>
-          <td class="nash-cell"><span class="payoff-high">3</span>, <span class="payoff-high">3</span><div style="font-size:0.55rem;color:#3a8a5a">باريتو ✓</div></td>
-          <td><span class="payoff-low">0</span>, <span class="payoff-high">5</span></td>
-        </tr>
-        <tr>
-          <th>أنت: خيانة</th>
-          <td><span class="payoff-high">5</span>, <span class="payoff-low">0</span></td>
-          <td class="dominant-cell"><span class="payoff-med">1</span>, <span class="payoff-med">1</span><div style="font-size:0.55rem;color:#9a4a3a">ناش ✓</div></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-```
-
   </div>
 
   <div class="card">
     <div class="card-title">⚡ توازن ناش — محاكاة الطريق</div>
     <div style="font-size:0.7rem;color:#7a9ab0;margin-bottom:10px;line-height:1.5">1000 سائق يختارون بين طريقين. انقر لتوزيع السائقين وشاهد توازن ناش يتشكل.</div>
 
-```
-<div style="display:flex;gap:10px;margin-bottom:10px">
-  <div style="flex:1;text-align:center">
-    <div style="font-size:0.7rem;color:#5b9bd5;margin-bottom:6px">🛣️ الطريق A</div>
-    <div id="road-a-count" style="font-size:1.6rem;font-weight:bold;color:#5b9bd5">500</div>
-    <div id="road-a-time" style="font-size:0.65rem;color:#4a6a8a">وقت: 30 دقيقة</div>
-  </div>
-  <div style="display:flex;flex-direction:column;justify-content:center;gap:6px">
-    <button onclick="moveToA()" style="padding:6px 12px;background:#0a1828;border:1px solid #2a5a8a;border-radius:6px;color:#5b9bd5;font-size:0.65rem;cursor:pointer">← A</button>
-    <button onclick="moveToB()" style="padding:6px 12px;background:#0a1820;border:1px solid #2a5a3a;border-radius:6px;color:#50b080;font-size:0.65rem;cursor:pointer">B →</button>
-  </div>
-  <div style="flex:1;text-align:center">
-    <div style="font-size:0.7rem;color:#50b080;margin-bottom:6px">🛣️ الطريق B</div>
-    <div id="road-b-count" style="font-size:1.6rem;font-weight:bold;color:#50b080">500</div>
-    <div id="road-b-time" style="font-size:0.65rem;color:#4a6a8a">وقت: 30 دقيقة</div>
-  </div>
-</div>
+    <div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+      <div style="flex:1;min-width:120px;text-align:center;background:#0a121d;border:1px solid #1d395a;border-radius:14px;padding:12px">
+        <div style="font-size:0.7rem;color:#5b9bd5;margin-bottom:6px">🛣️ الطريق A</div>
+        <div id="road-a-count" style="font-size:1.7rem;font-weight:bold;color:#5b9bd5">500</div>
+        <div id="road-a-time" style="font-size:0.65rem;color:#4a6a8a">وقت: 30 دقيقة</div>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:8px">
+        <button onclick="moveToA()" style="padding:8px 14px;background:#0a1828;border:1px solid #2a5a8a;border-radius:10px;color:#5b9bd5;font-size:0.67rem;cursor:pointer">← A</button>
+        <button onclick="moveToB()" style="padding:8px 14px;background:#0a1820;border:1px solid #2a5a3a;border-radius:10px;color:#50b080;font-size:0.67rem;cursor:pointer">B →</button>
+      </div>
+      <div style="flex:1;min-width:120px;text-align:center;background:#0a121d;border:1px solid #1d395a;border-radius:14px;padding:12px">
+        <div style="font-size:0.7rem;color:#50b080;margin-bottom:6px">🛣️ الطريق B</div>
+        <div id="road-b-count" style="font-size:1.7rem;font-weight:bold;color:#50b080">500</div>
+        <div id="road-b-time" style="font-size:0.65rem;color:#4a6a8a">وقت: 30 دقيقة</div>
+      </div>
+    </div>
 
-<div id="road-status" style="text-align:center;padding:8px;border-radius:8px;font-size:0.7rem;background:#0a1020;border:1px solid #1a3a5a;color:#6a8aa0">
-  الوضع الحالي: التوزيع متساوٍ — هذا توازن ناش ✓
-</div>
-```
-
+    <div id="road-status" style="text-align:center;padding:10px 12px;border-radius:12px;font-size:0.72rem;background:#0a1020;border:1px solid #1a3a5a;color:#6a8aa0">
+      الوضع الحالي: التوزيع متساوٍ — هذا توازن ناش ✓
+    </div>
   </div>
 </div>
 
 <!-- ===== TAB 5: MATRIX ===== -->
-
 <div id="tab-matrix" class="content">
   <div class="card">
     <div class="card-title">📊 مقارنة المفاهيم الأساسية</div>
-    <div style="overflow-x:auto">
+    <div class="table-scroll">
       <table class="gt-matrix">
         <thead>
           <tr>
@@ -803,26 +1284,27 @@ d = نقطة الانهيار (ماذا يحصل بدون اتفاق)</div>
 
   <div class="card">
     <div class="card-title">📊 متى تستخدم أي مفهوم؟</div>
-    <table class="gt-matrix">
-      <thead>
-        <tr><th>الموقف</th><th>المفهوم المناسب</th><th>السبب</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>لا أحد يريد التغيير</td><td class="cell-blue">توازن ناش</td><td>نقطة استقرار</td></tr>
-        <tr><td>فائدتي = خسارتك</td><td class="cell-purple">لعبة صفرية</td><td>مجموع ثابت</td></tr>
-        <tr><td>نعرف أن التعاون أفضل لكننا نخون</td><td class="cell-high">معضلة السجين</td><td>فخ المصلحة الفردية</td></tr>
-        <tr><td>أحد يجب أن يتراجع</td><td class="cell-med">لعبة الجبان</td><td>حافة الهاوية</td></tr>
-        <tr><td>اللعبة لها نهاية محددة</td><td class="cell-blue">استدلال عكسي</td><td>النهاية تشكل البداية</td></tr>
-        <tr><td>نتعامل بشكل متكرر</td><td class="cell-low">ألعاب متكررة</td><td>الغد يكبح الخيانة</td></tr>
-        <tr><td>أحد يعرف أكثر من الآخر</td><td class="cell-purple">إشارات / فرز</td><td>معلومات غير متماثلة</td></tr>
-        <tr><td>نريد تصميم سوق عادل</td><td class="cell-blue">تصميم آليات</td><td>هندسة قواعد اللعبة</td></tr>
-      </tbody>
-    </table>
+    <div class="table-scroll">
+      <table class="gt-matrix">
+        <thead>
+          <tr><th>الموقف</th><th>المفهوم المناسب</th><th>السبب</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>لا أحد يريد التغيير</td><td class="cell-blue">توازن ناش</td><td>نقطة استقرار</td></tr>
+          <tr><td>فائدتي = خسارتك</td><td class="cell-purple">لعبة صفرية</td><td>مجموع ثابت</td></tr>
+          <tr><td>نعرف أن التعاون أفضل لكننا نخون</td><td class="cell-high">معضلة السجين</td><td>فخ المصلحة الفردية</td></tr>
+          <tr><td>أحد يجب أن يتراجع</td><td class="cell-med">لعبة الجبان</td><td>حافة الهاوية</td></tr>
+          <tr><td>اللعبة لها نهاية محددة</td><td class="cell-blue">استدلال عكسي</td><td>النهاية تشكل البداية</td></tr>
+          <tr><td>نتعامل بشكل متكرر</td><td class="cell-low">ألعاب متكررة</td><td>الغد يكبح الخيانة</td></tr>
+          <tr><td>أحد يعرف أكثر من الآخر</td><td class="cell-purple">إشارات / فرز</td><td>معلومات غير متماثلة</td></tr>
+          <tr><td>نريد تصميم سوق عادل</td><td class="cell-blue">تصميم آليات</td><td>هندسة قواعد اللعبة</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
 <!-- ===== TAB 6: QUIZ ===== -->
-
 <div id="tab-quiz" class="content">
   <div class="card">
     <div class="card-title">🎯 اختبر فهمك لنظرية الألعاب</div>
@@ -832,7 +1314,6 @@ d = نقطة الانهيار (ماذا يحصل بدون اتفاق)</div>
 </div>
 
 <!-- ===== TAB 7: SEARCH ===== -->
-
 <div id="tab-search" class="content">
   <div class="card">
     <div class="card-title">🔍 ابحث عن أي مفهوم</div>
@@ -847,23 +1328,23 @@ d = نقطة الانهيار (ماذا يحصل بدون اتفاق)</div>
 
   <div class="card">
     <div class="card-title">🏷️ تصفح حسب الفئة</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <div onclick="jumpToFilter('equilibrium')" style="background:#040d1a;border:1px solid #1a4a8a;border-radius:8px;padding:10px;cursor:pointer;text-align:center;transition:all .2s">
+    <div class="info-grid-2">
+      <div onclick="jumpToFilter('equilibrium')" style="background:#040d1a;border:1px solid #1a4a8a;border-radius:14px;padding:12px;cursor:pointer;text-align:center;transition:all .2s">
         <div style="font-size:1rem">⚖️</div>
         <div style="font-size:0.72rem;color:#5b9bd5;margin:4px 0">مفاهيم التوازن</div>
         <div style="font-size:0.62rem;color:#3a5a7a">ناش، باريتو، مختلطة</div>
       </div>
-      <div onclick="jumpToFilter('classic')" style="background:#070410;border:1px solid #4a1a6a;border-radius:8px;padding:10px;cursor:pointer;text-align:center;transition:all .2s">
+      <div onclick="jumpToFilter('classic')" style="background:#070410;border:1px solid #4a1a6a;border-radius:14px;padding:12px;cursor:pointer;text-align:center;transition:all .2s">
         <div style="font-size:1rem">♟️</div>
         <div style="font-size:0.72rem;color:#a060c0;margin:4px 0">الألعاب الكلاسيكية</div>
         <div style="font-size:0.62rem;color:#3a2a5a">سجين، جبان، صياد</div>
       </div>
-      <div onclick="jumpToFilter('dynamic')" style="background:#040f08;border:1px solid #1a6a3a;border-radius:8px;padding:10px;cursor:pointer;text-align:center;transition:all .2s">
+      <div onclick="jumpToFilter('dynamic')" style="background:#040f08;border:1px solid #1a6a3a;border-radius:14px;padding:12px;cursor:pointer;text-align:center;transition:all .2s">
         <div style="font-size:1rem">🔄</div>
         <div style="font-size:0.72rem;color:#50b080;margin:4px 0">الألعاب الديناميكية</div>
         <div style="font-size:0.62rem;color:#2a5a3a">متكررة، مساومة، تحالف</div>
       </div>
-      <div onclick="jumpToFilter('info')" style="background:#08040f;border:1px solid #5a1a6a;border-radius:8px;padding:10px;cursor:pointer;text-align:center;transition:all .2s">
+      <div onclick="jumpToFilter('info')" style="background:#08040f;border:1px solid #5a1a6a;border-radius:14px;padding:12px;cursor:pointer;text-align:center;transition:all .2s">
         <div style="font-size:1rem">🔍</div>
         <div style="font-size:0.72rem;color:#a060c0;margin:4px 0">ألعاب المعلومات</div>
         <div style="font-size:0.62rem;color:#4a2a5a">إشارات، فرز، مزادات</div>
@@ -874,34 +1355,36 @@ d = نقطة الانهيار (ماذا يحصل بدون اتفاق)</div>
 
 <script>
 // ===== TAB NAVIGATION =====
-function showTab(id){
-  document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-  event.currentTarget.classList.add('active');
+function showTab(id, el){
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if(el) el.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 // ===== CONCEPT TOGGLE =====
 function toggleConcept(el){
   const wasExpanded = el.classList.contains('expanded');
-  document.querySelectorAll('.concept-card.expanded').forEach(c=>{
+  document.querySelectorAll('.concept-card.expanded').forEach(c => {
     c.classList.remove('expanded');
-    c.querySelector('.cc-detail').style.display='none';
   });
   if(!wasExpanded){
     el.classList.add('expanded');
-    el.querySelector('.cc-detail').style.display='block';
   }
 }
 
 // ===== FILTER =====
 function filterConcepts(tag, btn){
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.concept-card').forEach(c=>{
-    if(tag==='all'){c.style.display='block';return}
-    const tags = c.getAttribute('data-tags')||'';
-    c.style.display = tags.includes(tag)?'block':'none';
+  document.querySelectorAll('.concept-card').forEach(c => {
+    if(tag === 'all'){
+      c.style.display = 'block';
+      return;
+    }
+    const tags = c.getAttribute('data-tags') || '';
+    c.style.display = tags.includes(tag) ? 'block' : 'none';
   });
 }
 
@@ -909,7 +1392,7 @@ function filterConcepts(tag, btn){
 function toggleTree(el){
   const children = el.nextElementSibling;
   if(children && children.classList.contains('tree-children')){
-    children.style.display = children.style.display==='none'?'block':'none';
+    children.style.display = children.style.display === 'none' ? 'block' : 'none';
     el.classList.toggle('active');
   }
 }
@@ -918,64 +1401,78 @@ function toggleTree(el){
 let pdChoice = null;
 function setChoice(who, choice, el){
   pdChoice = choice;
-  document.getElementById('you-coop').style.borderColor='#1a3a5a';
-  document.getElementById('you-coop').style.background='#0a1828';
-  document.getElementById('you-bet').style.borderColor='#3a1a2a';
-  document.getElementById('you-bet').style.background='#0a0818';
-  el.style.borderColor='#5b9bd5';
-  el.style.background='#0d2a4a';
+  document.getElementById('you-coop').style.borderColor = '#1a3a5a';
+  document.getElementById('you-coop').style.background = '#0a1828';
+  document.getElementById('you-bet').style.borderColor = '#3a1a2a';
+  document.getElementById('you-bet').style.background = '#0a0818';
+
+  if(choice === 'cooperate'){
+    el.style.borderColor = '#5b9bd5';
+    el.style.background = '#0d2a4a';
+  } else {
+    el.style.borderColor = '#c05080';
+    el.style.background = '#2a0d17';
+  }
 }
+
 function playPD(){
-  if(!pdChoice){alert('اختر أولاً: تعاون أو خيانة');return}
-  const oppChoice = Math.random()<0.5?'cooperate':'betray';
+  if(!pdChoice){
+    alert('اختر أولاً: تعاون أو خيانة');
+    return;
+  }
+
+  const oppChoice = Math.random() < 0.5 ? 'cooperate' : 'betray';
   const oppEl = document.getElementById('opp-display');
-  oppEl.innerHTML = oppChoice==='cooperate'
+  oppEl.innerHTML = oppChoice === 'cooperate'
     ? '<div style="font-size:1.2rem">🤝</div><div style="font-size:0.65rem;color:#50b080;margin-top:4px">تعاون</div>'
     : '<div style="font-size:1.2rem">🗡️</div><div style="font-size:0.65rem;color:#c05080;margin-top:4px">خيانة</div>';
-  const results={
-    'cooperate-cooperate':{you:3,opp:3,msg:'كلاكما تعاون — نتيجة باريتو المثلى! لكن ليست توازن ناش.',bg:'#041a08',border:'#2a6a3a',color:'#50b080'},
-    'cooperate-betray':{you:0,opp:5,msg:'خانك! أنت صفر وهو يحصل على أقصى فائدة. لهذا الخيانة مغرية.',bg:'#1a0408',border:'#6a1a2a',color:'#c05080'},
-    'betray-cooperate':{you:5,opp:0,msg:'خنته! حصلت على أقصى فائدة. لكن لو فكر مثلك؟',bg:'#0a1a08',border:'#3a6a2a',color:'#50b080'},
-    'betray-betray':{you:1,opp:1,msg:'كلاكما خان — هذا هو توازن ناش! كلاكما في وضع أسوأ من التعاون (3,3) لكن لا أحد يندم على خيانته.',bg:'#1a0a04',border:'#6a4a1a',color:'#d08030'}
+
+  const results = {
+    'cooperate-cooperate': {you:3, opp:3, msg:'كلاكما تعاون — نتيجة باريتو المثلى! لكن ليست توازن ناش.', bg:'#041a08', border:'#2a6a3a', color:'#50b080'},
+    'cooperate-betray': {you:0, opp:5, msg:'خانك! أنت صفر وهو يحصل على أقصى فائدة. لهذا الخيانة مغرية.', bg:'#1a0408', border:'#6a1a2a', color:'#c05080'},
+    'betray-cooperate': {you:5, opp:0, msg:'خنته! حصلت على أقصى فائدة. لكن لو فكر مثلك؟', bg:'#0a1a08', border:'#3a6a2a', color:'#50b080'},
+    'betray-betray': {you:1, opp:1, msg:'كلاكما خان — هذا هو توازن ناش! كلاكما في وضع أسوأ من التعاون (3,3) لكن لا أحد يندم على خيانته.', bg:'#1a0a04', border:'#6a4a1a', color:'#d08030'}
   };
-  const key = pdChoice+'-'+oppChoice;
+
+  const key = pdChoice + '-' + oppChoice;
   const r = results[key];
   const resultEl = document.getElementById('pd-result');
-  resultEl.style.display='block';
-  resultEl.style.background=r.bg;
-  resultEl.style.borderColor=r.border;
-  resultEl.innerHTML=`<div style="font-size:0.8rem;font-weight:bold;color:${r.color};margin-bottom:6px">أنت: ${r.you} نقاط | الخصم: ${r.opp} نقاط</div><div style="font-size:0.68rem;color:#8a9ab0;line-height:1.5">${r.msg}</div>`;
+  resultEl.style.display = 'block';
+  resultEl.style.background = r.bg;
+  resultEl.style.borderColor = r.border;
+  resultEl.innerHTML = `<div style="font-size:0.8rem;font-weight:bold;color:${r.color};margin-bottom:6px">أنت: ${r.you} نقاط | الخصم: ${r.opp} نقاط</div><div style="font-size:0.68rem;color:#8a9ab0;line-height:1.5">${r.msg}</div>`;
 }
 
 // ===== ROAD SIMULATION =====
-let roadA=500, roadB=500;
+let roadA = 500, roadB = 500;
 function updateRoad(){
-  const timeA = 10 + roadA*0.04;
-  const timeB = 10 + roadB*0.04;
-  document.getElementById('road-a-count').textContent=roadA;
-  document.getElementById('road-b-count').textContent=roadB;
-  document.getElementById('road-a-time').textContent=`وقت: ${timeA.toFixed(0)} دقيقة`;
-  document.getElementById('road-b-time').textContent=`وقت: ${timeB.toFixed(0)} دقيقة`;
+  const timeA = 10 + roadA * 0.04;
+  const timeB = 10 + roadB * 0.04;
+  document.getElementById('road-a-count').textContent = roadA;
+  document.getElementById('road-b-count').textContent = roadB;
+  document.getElementById('road-a-time').textContent = `وقت: ${timeA.toFixed(0)} دقيقة`;
+  document.getElementById('road-b-time').textContent = `وقت: ${timeB.toFixed(0)} دقيقة`;
+
   const status = document.getElementById('road-status');
-  if(Math.abs(timeA-timeB)<2){
-    status.style.color='#4caf50';
-    status.style.borderColor='#1a6a2a';
-    status.textContent='✓ توازن ناش تحقق — أوقات متساوية، لا أحد يستفيد من التحول';
-  } else if(timeA<timeB){
-    status.style.color='#e09b2d';
-    status.style.borderColor='#6a4a1a';
-    status.textContent='⚠ A أسرع — السائقون سيتحولون إليه حتى يتوازن الوقتان';
+  if(Math.abs(timeA - timeB) < 2){
+    status.style.color = '#4caf50';
+    status.style.borderColor = '#1a6a2a';
+    status.textContent = '✓ توازن ناش تحقق — أوقات متساوية، لا أحد يستفيد من التحول';
+  } else if(timeA < timeB){
+    status.style.color = '#e09b2d';
+    status.style.borderColor = '#6a4a1a';
+    status.textContent = '⚠ A أسرع — السائقون سيتحولون إليه حتى يتوازن الوقتان';
   } else {
-    status.style.color='#e09b2d';
-    status.style.borderColor='#6a4a1a';
-    status.textContent='⚠ B أسرع — السائقون سيتحولون إليه حتى يتوازن الوقتان';
+    status.style.color = '#e09b2d';
+    status.style.borderColor = '#6a4a1a';
+    status.textContent = '⚠ B أسرع — السائقون سيتحولون إليه حتى يتوازن الوقتان';
   }
 }
-function moveToA(){if(roadB>0){roadA+=50;roadB-=50;updateRoad()}}
-function moveToB(){if(roadA>0){roadB+=50;roadA-=50;updateRoad()}}
+function moveToA(){ if(roadB > 0){ roadA += 50; roadB -= 50; updateRoad(); } }
+function moveToB(){ if(roadA > 0){ roadB += 50; roadA -= 50; updateRoad(); } }
 
 // ===== QUIZ =====
-const quizData=[
+const quizData = [
   {q:'في معضلة السجين، ما الذي يمثل "توازن ناش"؟',opts:['كلاهما يتعاون','كلاهما يخون','أحدهما يخون والآخر يتعاون','يتبادلان التعاون والخيانة'],correct:1,exp:'الخيانة المتبادلة (1,1) هي توازن ناش — رغم أن التعاون المتبادل (3,3) أفضل للجميع. كل لاعب يندم لو تعاون وحده.'},
   {q:'ما هي "لعبة الجبان" في السياسة الدولية؟',opts:['عندما يتعاون طرفان','عندما كلا الطرفين يندفعان نحو الاصطدام ومن يتراجع يخسر الهيبة','عندما لاعب يعرف أكثر من الآخر','عندما تكرر اللعبة يحقق التعاون'],correct:1,exp:'لعبة الجبان: كلا الطرفين يتجهان للاصطدام. المثال الكلاسيكي: أزمة الصواريخ الكوبية 1962.'},
   {q:'ما الذي يعنيه "الاستدلال العكسي"؟',opts:['البدء بالجولة الأولى وتحليلها','تحليل اللعبة من نهايتها إلى بدايتها','اختيار استراتيجية عشوائية','حساب متوسط المكافآت'],correct:1,exp:'الاستدلال العكسي: في الجولة الأخيرة لا حافز للتعاون، فتنهار التعاونية بالكامل من النهاية للبداية.'},
@@ -984,68 +1481,89 @@ const quizData=[
   {q:'ما هي "نظرية الإشارات"؟',opts:['إرسال رسائل كاذبة للخصم','إرسال إشارات مكلفة لإثبات معلومات خاصة موثوقة','تجاهل معلومات الخصم','المزايدة بأعلى سعر'],correct:1,exp:'الإشارة فعالة لأنها مكلفة للتقليد — فقط من يملك الميزة الحقيقية يستطيع دفع التكلفة.'},
   {q:'ما هو هدف "تصميم الآليات"؟',opts:['تحليل قواعد اللعبة الموجودة','تصميم قواعد اللعبة لتحقيق نتيجة مرغوبة','إلغاء توازن ناش','جعل اللعبة صفرية'],correct:1,exp:'تصميم الآليات هو "نظرية الألعاب العكسية" — بدلاً من تحليل لعبة موجودة، نصمم اللعبة لتحقيق الهدف.'},
 ];
-let qIdx=0, score=0, answered=false;
+
+let qIdx = 0, score = 0, answered = false;
+
 function initQuiz(){
-  const prog=document.getElementById('quizProg');
-  prog.innerHTML=quizData.map((q,i)=>`<div class="quiz-dot ${i===0?'active':''}"></div>`).join('');
+  const prog = document.getElementById('quizProg');
+  prog.innerHTML = quizData.map((q,i) => `<div class="quiz-dot ${i===0?'active':''}"></div>`).join('');
   renderQuestion();
 }
+
 function renderQuestion(){
-  const q=quizData[qIdx];
-  answered=false;
-  const container=document.getElementById('quizContainer');
-  container.innerHTML=`
+  const q = quizData[qIdx];
+  answered = false;
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = `
     <div class="quiz-q">${qIdx+1}/${quizData.length} — ${q.q}</div>
     <div class="quiz-opts">${q.opts.map((o,i)=>`<div class="quiz-opt" onclick="answerQuiz(${i},this)">${o}</div>`).join('')}</div>
     <div id="quiz-fb" class="quiz-feedback" style="display:none"></div>
     <div class="quiz-nav">
       <div class="quiz-btn" onclick="nextQuestion()" id="quiz-next" style="display:none">التالي ▶</div>
-      <div id="quiz-final" style="display:none"></div>
+      <div id="quiz-final" style="display:none; width:100%"></div>
     </div>
   `;
 }
-function answerQuiz(idx,el){
-  if(answered)return;
-  answered=true;
-  const q=quizData[qIdx];
-  const opts=document.querySelectorAll('.quiz-opt');
-  opts.forEach(o=>o.style.pointerEvents='none');
-  if(idx===q.correct){
+
+function answerQuiz(idx, el){
+  if(answered) return;
+  answered = true;
+  const q = quizData[qIdx];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.style.pointerEvents = 'none');
+
+  const fb = document.getElementById('quiz-fb');
+  fb.style.display = 'block';
+
+  if(idx === q.correct){
     el.classList.add('correct');
     score++;
-    document.getElementById('quiz-fb').style.display='block';
-    document.getElementById('quiz-fb').style.background='#041a08';
-    document.getElementById('quiz-fb').style.color='#50b080';
-    document.getElementById('quiz-fb').textContent='✓ صحيح! '+q.exp;
+    fb.style.background = '#041a08';
+    fb.style.color = '#50b080';
+    fb.textContent = '✓ صحيح! ' + q.exp;
   } else {
     el.classList.add('wrong');
     opts[q.correct].classList.add('correct');
-    document.getElementById('quiz-fb').style.display='block';
-    document.getElementById('quiz-fb').style.background='#1a0408';
-    document.getElementById('quiz-fb').style.color='#c05080';
-    document.getElementById('quiz-fb').textContent='✗ خطأ. '+q.exp;
+    fb.style.background = '#1a0408';
+    fb.style.color = '#c05080';
+    fb.textContent = '✗ خطأ. ' + q.exp;
   }
-  const dots=document.querySelectorAll('.quiz-dot');
-  dots[qIdx].style.background=idx===q.correct?'#4caf50':'#e74c3c';
-  if(qIdx<quizData.length-1){
-    document.getElementById('quiz-next').style.display='block';
+
+  const dots = document.querySelectorAll('.quiz-dot');
+  dots[qIdx].style.background = idx === q.correct ? '#4caf50' : '#e74c3c';
+
+  if(qIdx < quizData.length - 1){
+    document.getElementById('quiz-next').style.display = 'block';
   } else {
-    const pct=Math.round(score/quizData.length*100);
-    const msg=pct>=80?'ممتاز! أتقنت نظرية الألعاب':pct>=60?'جيد! راجع المفاهيم الأساسية':'راجع الخريطة وأعد الاختبار';
-    document.getElementById('quiz-final').style.display='block';
-    document.getElementById('quiz-final').innerHTML=`<div class="quiz-score">${score}/${quizData.length} — ${pct}%<br><span style="font-size:0.7rem;color:#7a9ab0">${msg}</span><br><button onclick="restartQuiz()" style="margin-top:8px;padding:6px 14px;background:#0a1828;border:1px solid #2a5a8a;border-radius:6px;color:#5b9bd5;font-size:0.68rem;cursor:pointer">إعادة الاختبار</button></div>`;
+    const pct = Math.round(score / quizData.length * 100);
+    const msg = pct >= 80 ? 'ممتاز! أتقنت نظرية الألعاب' : pct >= 60 ? 'جيد! راجع المفاهيم الأساسية' : 'راجع الخريطة وأعد الاختبار';
+    document.getElementById('quiz-final').style.display = 'block';
+    document.getElementById('quiz-final').innerHTML = `
+      <div class="quiz-score">
+        ${score}/${quizData.length} — ${pct}%<br>
+        <span style="font-size:0.7rem;color:#7a9ab0">${msg}</span><br>
+        <button onclick="restartQuiz()" style="margin-top:10px;padding:8px 14px;background:#0a1828;border:1px solid #2a5a8a;border-radius:10px;color:#5b9bd5;font-size:0.68rem;cursor:pointer">إعادة الاختبار</button>
+      </div>
+    `;
   }
 }
+
 function nextQuestion(){
   qIdx++;
-  const dots=document.querySelectorAll('.quiz-dot');
-  if(dots[qIdx])dots[qIdx].classList.add('active');
+  const dots = document.querySelectorAll('.quiz-dot');
+  dots.forEach(d => d.classList.remove('active'));
+  if(dots[qIdx]) dots[qIdx].classList.add('active');
   renderQuestion();
 }
-function restartQuiz(){qIdx=0;score=0;initQuiz();}
+
+function restartQuiz(){
+  qIdx = 0;
+  score = 0;
+  initQuiz();
+}
 
 // ===== SEARCH =====
-const searchData=[
+const searchData = [
   {title:'توازن ناش',en:'Nash Equilibrium',desc:'لا أحد يملك حافزاً للانحراف منفرداً',tags:'equilibrium classic'},
   {title:'اللعبة الصفرية',en:'Zero-Sum Game',desc:'ما يكسبه أحد يخسره الآخر',tags:'classic'},
   {title:'معضلة السجين',en:"Prisoner's Dilemma",desc:'المصلحة الفردية تدمر المصلحة الجماعية',tags:'classic applied'},
@@ -1063,40 +1581,89 @@ const searchData=[
   {title:'نظرية الألعاب التطورية',en:'Evolutionary Game Theory',desc:'الاستراتيجيات تتطور مع الزمن',tags:'dynamic'},
   {title:'نظرية المساومة',en:'Bargaining Theory',desc:'اقتسام الفائض بين طرفين',tags:'dynamic applied'},
 ];
+
 function searchConcepts(val){
-  const res=document.getElementById('searchResults');
-  const empty=document.getElementById('searchEmpty');
-  if(val.length<1){res.classList.remove('show');empty.style.display='none';return}
-  const filtered=searchData.filter(d=>
-    d.title.includes(val)||d.en.toLowerCase().includes(val.toLowerCase())||d.desc.includes(val)||d.tags.includes(val.toLowerCase())
+  const res = document.getElementById('searchResults');
+  const empty = document.getElementById('searchEmpty');
+
+  if(val.length < 1){
+    res.classList.remove('show');
+    empty.style.display = 'none';
+    res.innerHTML = '';
+    return;
+  }
+
+  const filtered = searchData.filter(d =>
+    d.title.includes(val) ||
+    d.en.toLowerCase().includes(val.toLowerCase()) ||
+    d.desc.includes(val) ||
+    d.tags.includes(val.toLowerCase())
   );
-  if(filtered.length===0){res.classList.remove('show');empty.style.display='block';return}
-  empty.style.display='none';
+
+  if(filtered.length === 0){
+    res.classList.remove('show');
+    empty.style.display = 'block';
+    res.innerHTML = '';
+    return;
+  }
+
+  empty.style.display = 'none';
   res.classList.add('show');
-  res.innerHTML=filtered.map(d=>`
-    <div class="sr-item" onclick="jumpToConcept('${d.en}')">
-      <div class="sr-title">${d.title} <span style="font-size:0.6rem;color:#3a5a7a">${d.en}</span></div>
+  res.innerHTML = filtered.map(d => `
+    <div class="sr-item" onclick="jumpToConcept('${d.en.replace(/'/g, "\\'")}')">
+      <div class="sr-title">${d.title} <span style="font-size:0.6rem;color:#58728e">${d.en}</span></div>
       <div class="sr-desc">${d.desc}</div>
-      <div style="margin-top:4px">${d.tags.split(' ').map(t=>`<span class="cc-tag">${t}</span>`).join('')}</div>
+      <div style="margin-top:6px">${d.tags.split(' ').map(t => `<span class="cc-tag">${t}</span>`).join('')}</div>
     </div>
   `).join('');
 }
+
 function jumpToFilter(filter){
   showTabById('concepts');
-  setTimeout(()=>filterConcepts(filter,document.querySelector(`.filter-btn[onclick*="${filter}"]`)),100);
+  setTimeout(() => {
+    const btn = [...document.querySelectorAll('.filter-btn')].find(b => b.getAttribute('onclick').includes(`'${filter}'`));
+    if(btn) filterConcepts(filter, btn);
+  }, 80);
 }
+
 function showTabById(id){
-  document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-  const tabs=document.querySelectorAll('.tab');
-  const tabIds=['overview','concepts','tree','interactive','matrix','quiz','search'];
-  const idx=tabIds.indexOf(id);
-  if(idx>=0)tabs[idx].classList.add('active');
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+
+  const tabs = document.querySelectorAll('.tab');
+  const tabIds = ['overview','concepts','tree','interactive','matrix','quiz','search'];
+  const idx = tabIds.indexOf(id);
+  if(idx >= 0) tabs[idx].classList.add('active');
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
+
 function jumpToConcept(en){
   showTabById('concepts');
-  filterConcepts('all',document.querySelectorAll('.filter-btn')[0]);
+  const firstBtn = document.querySelectorAll('.filter-btn')[0];
+  filterConcepts('all', firstBtn);
+
+  setTimeout(() => {
+    const cards = document.querySelectorAll('.concept-card');
+    let target = null;
+
+    cards.forEach(card => {
+      const enEl = card.querySelector('.cc-en');
+      if(enEl && enEl.textContent.trim() === en){
+        target = card;
+      }
+    });
+
+    if(target){
+      target.classList.add('expanded');
+      target.scrollIntoView({behavior:'smooth', block:'center'});
+      target.style.boxShadow = '0 0 0 2px rgba(214,179,90,.25), 0 18px 30px rgba(0,0,0,.28)';
+      setTimeout(() => {
+        target.style.boxShadow = '';
+      }, 1800);
+    }
+  }, 120);
 }
 
 // ===== INIT =====
